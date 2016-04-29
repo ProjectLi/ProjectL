@@ -6,10 +6,13 @@
 
 #include "ConsoleWrap.h"
 
+//Ch - обозначает счетчик
+
 #define _HEIGHT	25
 #define _WIDTH	50
 #define _SIZELIFE 100
 
+//Отдельно вынесенный счетчик первого поколения (красные).
 VOID Ch()
 {
 	INT i, j, k = 0, ch = 0;
@@ -25,14 +28,20 @@ VOID Ch()
 			}
 		}
 	}
-	SetPos(42, _HEIGHT + 1);
+	//Если при отрисовке предыдущее значение было больше нынешнего, то нарисуется "поверх".
+	//Это нежелательно, потому как отображаться будет неверное значение.
+	SetPos(38, _HEIGHT + 1);
+	//Потому мы указываем координаты, и затираем их, прежде чем писать наше значение.
+	printf("    ");
 	SetColor(f_red);
 	printf("%d", ch);
 }
 
+
+
 VOID Rename()
 {
-	INT i, j, k = 0, ch = 0;
+	INT i, j, k = 0;
 
 	for (i = 1; i < _HEIGHT; i++)
 	{
@@ -43,17 +52,17 @@ VOID Rename()
 				SetChar(j, i, c_black, ' ');
 			}
 			else
-				if (GetChar(j, i) == '2')
-				{
-					SetChar(j, i, f_red, '1');
-				}
+			if (GetChar(j, i) == '2')
+			{
+				SetChar(j, i, f_red, '1');
+			}
 		}
 	}
 }
 
 VOID DeathGen()
 {
-	INT i, j, k = 0, ch = 0;
+	INT i, j, k = 0, dth = 0, ch = 0, death_ch = 0;
 
 	for (i = 1; i < _HEIGHT; i++)
 	{
@@ -109,17 +118,23 @@ VOID DeathGen()
 				if (ch < 2 || ch > 3)
 				{
 					SetChar(j, i, f_cyan, '0');
+					death_ch++;
 				}
 
 				ch = 0;
 			}
 		}
 	}
+
+	SetPos(38, _HEIGHT + 3);
+	printf("    ");
+	printf("%d", death_ch);
+	death_ch = 0;
 }
 
 VOID SecondGen()
 {
-	INT i, j, k = 0, ch = 0;
+	INT i, j, k = 0, dth = 0, ch = 0;
 
 	for (i = 1; i < _HEIGHT; i++)
 	{
@@ -183,6 +198,8 @@ VOID SecondGen()
 				{
 					k++;
 				}
+
+
 			}
 		}
 	}
@@ -190,6 +207,8 @@ VOID SecondGen()
 	SetPos(42, _HEIGHT + 2);
 	printf("%d", k);
 }
+
+
 
 VOID RandomFirstGen()
 {
@@ -238,6 +257,52 @@ VOID Interface()
 
 }
 
+//===========================================================================
+
+
+
+//===========================================================================
+
+
+
+VOID Classic()
+{
+	Interface();
+
+	RandomFirstGen();
+	Ch();
+
+	for (;;)
+	{
+		_getch();
+		SecondGen();
+		_getch();
+		DeathGen();
+		_getch();
+		Rename();
+		Ch();
+	}
+}
+
+VOID Сustom()
+{
+	Interface();
+
+	RandomFirstGen();
+	Ch();
+
+	for (;;)
+	{
+		_getch();
+		SecondGen();
+		_getch();
+		DeathGen();
+		_getch();
+		Rename();
+		Ch();
+	}
+}
+
 VOID Start()
 {
 	INT i, j;
@@ -265,24 +330,34 @@ VOID Start()
 	{
 		case '1':
 		{
-			Interface();
+			key = 0;
 
-			RandomFirstGen();
-			Ch();
+			WritePos(15, 15, f_red, "                      ");
+			WritePos(15, 15, f_red, "1.  Классический режим");
+			WritePos(15, 17, f_red, "                            ");
+			WritePos(15, 17, f_red, "2.  Режим с доп. настройками");
+			WritePos(15, 19, f_red, "                            ");
+			WritePos(15, 21, f_red, "                            ");
 
-			for (;;)
+			do{
+			if (_kbhit()) key = _getch();
+			switch (key)
 			{
-				_getch();
-				SecondGen();
-				_getch();
-				DeathGen();
-				_getch();
-				Rename();
-				Ch();
+				case '1':
+				{
+					//Стандартный, классический
+					Classic();
+				}
+				case '2':
+				{
+					//Пользовательский
+					Сustom();
+				}
 			}
+			} while (TRUE);
 		}
-		case '2':
-		case '3':
+		case '2': 
+		case '3': 
 		case '4': exit(0);
 	}
 	} while (TRUE);
