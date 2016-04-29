@@ -1,5 +1,4 @@
-# ProjectL
-Welcome to the ProjectL
+#Welcome to the ProjectL
 
 # Проект "Игра Жизнь" 
 _Версия 0.1, 30/04/2016_
