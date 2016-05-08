@@ -1,3 +1,6 @@
+//Вроде доделанная версия от Мазурова Данила ИП-512
+//Осталось комменты наделать
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <conio.h>
@@ -12,6 +15,7 @@
 #define _WIDTH	50
 #define _SIZELIFE 100
 
+//===========================================================================
 //Отдельно вынесенный счетчик первого поколения (красные).
 VOID Ch()
 {
@@ -37,11 +41,33 @@ VOID Ch()
 	printf("%d", ch);
 }
 
+//Первое поколение, генерируемое случайно по всему полю.
+//Не гарантирую, что они смогут выжить ^_^
+VOID RandomFirstGen()
+{
+	INT i, j, k;
+	//Раскидывает по координатам X и Y (j и i соотв.)
+	for (k = 1; k < _SIZELIFE + 1; k++)
+	{
+		i = rand() % 24 + 1;
+		j = rand() % 49 + 1;
+		if (GetChar(i, j) != '1' && GetChar(i, j) != '#')
+		{
+			SetChar(j, i, f_red, '1');
+			SetPos(42, _HEIGHT + 1);
+		}
+		else
+		{
+			//Если попадаем на границу или на клетку '1', то счетчик идет на повтор
+			k--;
+		}
+	}
+}
 
-
+//Название говорит само за себя, тут переименование клеток из мертвых в пустые, и из новорожденных в взрослых
 VOID Rename()
 {
-	INT i, j, k = 0;
+	INT i, j;
 
 	for (i = 1; i < _HEIGHT; i++)
 	{
@@ -208,28 +234,6 @@ VOID SecondGen()
 	printf("%d", k);
 }
 
-
-
-VOID RandomFirstGen()
-{
-	INT i, j, k;
-
-	for (k = 1; k < _SIZELIFE + 1; k++)
-	{
-		i = rand() % 24 + 1;
-		j = rand() % 49 + 1;
-		if (GetChar(i, j) != '1')
-		{
-			SetChar(j, i, f_red, '1');
-			SetPos(42, _HEIGHT + 1);
-		}
-		else
-		{
-			k--;
-		}
-	}
-}
-
 VOID Interface()
 {
 	SHORT i;
@@ -253,17 +257,246 @@ VOID Interface()
 	WritePos(2, _HEIGHT + 1, f_red, "Первое поколение:                  [       ] ");
 	WritePos(2, _HEIGHT + 2, f_blue, "Второе поколение:                  [       ] ");
 	WritePos(2, _HEIGHT + 3, f_cyan, "Мертвые:                           [       ] ");
-
-
 }
 
 //===========================================================================
 
+VOID CustomRename()
+{
+	INT i, j, custom;
 
+	for (i = 1; i < _HEIGHT; i++)
+	{
+		for (j = 1; j < _WIDTH; j++)
+		{
+			if (GetChar(j, i) == '0')
+			{
+				SetChar(j, i, c_black, ' ');
+			}
+			else
+			if (GetChar(j, i) == '2')
+			{
+				custom = rand() % 100000 + 1;
+				if (custom > 0 && custom <= 10) //бессмертная клетка, шанс 0,01%
+				{
+					SetChar(j, i, f_green, '3');
+				}
+				else
+				if (custom > 10 && custom <= 110) //клетка-сметрник, шанс 0,1%
+				{
+					SetChar(j, i, f_yellow, '4');
+				}
+				else
+				if (custom > 110 && custom <= 210) //клетка-любовник, шанс 0,1%
+				{
+					SetChar(j, i, f_magenta, '5');
+				}
+				else
+				{
+					SetChar(j, i, f_red, '1');
+				}
+			}
+		}
+	}
+}
+
+VOID CustomSecondGen()
+{
+	INT i, j, k = 0, dth = 0, ch = 0;
+
+	for (i = 1; i < _HEIGHT; i++)
+	{
+		for (j = 1; j < _WIDTH; j++)
+		{
+
+			if (GetChar(j, i - 1) == '5' || GetChar(j, i + 1) == '5' || GetChar(j - 1, i) == '5' || GetChar(j + 1, i) == '5' ||
+				GetChar(j + 1, i + 1) == '5' || GetChar(j + 1, i - 1) == '5' || GetChar(j - 1, i + 1) == '5' || GetChar(j - 1, i - 1) == '5')
+			{
+				SetChar(j, i, f_blue, '2');
+				k++;
+			}
+
+			if (GetChar(j, i) == ' ')
+			{
+
+				if (GetChar(j + 1, i + 1) == '1')
+				{
+					ch++;
+				}
+
+				if (GetChar(j - 1, i - 1) == '1')
+				{
+					ch++;
+				}
+
+				if (GetChar(j + 1, i - 1) == '1')
+				{
+					ch++;
+				}
+
+
+				if (GetChar(j - 1, i + 1) == '1')
+				{
+					ch++;
+				}
+
+				//
+
+				if (GetChar(j + 1, i) == '1')
+				{
+					ch++;
+				}
+
+				if (GetChar(j, i + 1) == '1')
+				{
+					ch++;
+				}
+
+				if (GetChar(j - 1, i) == '1')
+				{
+					ch++;
+				}
+
+				if (GetChar(j, i - 1) == '1')
+				{
+					ch++;
+				}
+
+
+				if (ch == 3 || ch > 3)
+				{
+					SetChar(j, i, f_blue, '2');
+					k++;
+				}
+
+				ch = 0;
+
+			}
+		}
+	}
+
+	SetPos(42, _HEIGHT + 2);
+	printf("%d", k);
+}
+
+VOID CustomDeathGen()
+{
+	INT i, j, k = 0, dth = 0, ch = 0, death_ch = 0;
+
+	for (i = 1; i < _HEIGHT; i++)
+	{
+		for (j = 1; j < _WIDTH; j++)
+		{
+			if (GetChar(j, i) == '1' || GetChar(j, i) == '5')
+			{
+
+				if (GetChar(j + 1, i + 1) == '1' || GetChar(j + 1, i + 1) == '5' || GetChar(j + 1, i + 1) == '3' || GetChar(j + 1, i + 1) == '0')
+				{
+					ch++;
+				}
+
+				if (GetChar(j - 1, i - 1) == '1' || GetChar(j - 1, i - 1) == '5' || GetChar(j - 1, i - 1) == '3' || GetChar(j - 1, i - 1) == '0')
+				{
+					ch++;
+				}
+
+				if (GetChar(j + 1, i - 1) == '1' || GetChar(j + 1, i - 1) == '5' || GetChar(j + 1, i - 1) == '3' || GetChar(j + 1, i - 1) == '0')
+				{
+					ch++;
+				}
+
+
+				if (GetChar(j - 1, i + 1) == '1' || GetChar(j - 1, i + 1) == '5' || GetChar(j - 1, i + 1) == '3' || GetChar(j - 1, i + 1) == '0')
+				{
+					ch++;
+				}
+
+				//
+
+				if (GetChar(j + 1, i) == '1' || GetChar(j + 1, i) == '5' || GetChar(j + 1, i) == '3' || GetChar(j + 1, i) == '0')
+				{
+					ch++;
+				}
+
+				if (GetChar(j, i + 1) == '1' || GetChar(j, i + 1) == '5' || GetChar(j, i + 1) == '3' || GetChar(j, i + 1) == '0')
+				{
+					ch++;
+				}
+
+				if (GetChar(j - 1, i) == '1' || GetChar(j - 1, i) == '5' || GetChar(j - 1, i) == '3' || GetChar(j - 1, i) == '0')
+				{
+					ch++;
+				}
+
+				if (GetChar(j, i - 1) == '1' || GetChar(j, i - 1) == '5' || GetChar(j, i - 1) == '3' || GetChar(j, i - 1) == '0')
+				{
+					ch++;
+				}
+
+
+				if (ch < 2 || ch > 3)
+				{
+					SetChar(j, i, f_cyan, '0');
+					death_ch++;
+				}
+
+				ch = 0;
+			}
+			else
+			if (GetChar(j, i) == '4')
+			{
+				SetChar(j, i, f_cyan, '0');
+
+				if (GetChar(j + 1, i) != '#')
+				{
+					SetChar(j + 1, i, f_cyan, '0');
+				}
+
+				if (GetChar(j, i + 1) != '#')
+				{
+					SetChar(j, i + 1, f_cyan, '0');
+				}
+
+				if (GetChar(j - 1, i) != '#')
+				{
+					SetChar(j - 1, i, f_cyan, '0');
+				}
+
+				if (GetChar(j, i - 1) != '#')
+				{
+					SetChar(j, i - 1, f_cyan, '0');
+				}
+
+				if (GetChar(j + 1, i + 1) != '#')
+				{
+					SetChar(j + 1, i + 1, f_cyan, '0');
+				}
+
+				if (GetChar(j + 1, i - 1) != '#')
+				{
+					SetChar(j + 1, i - 1, f_cyan, '0');
+				}
+
+				if (GetChar(j - 1, i + 1) != '#')
+				{
+					SetChar(j - 1, i + 1, f_cyan, '0');
+				}
+
+				if (GetChar(j - 1, i - 1) != '#')
+				{
+					SetChar(j - 1, i - 1, f_cyan, '0');
+				}
+			}
+		}
+	}
+
+	SetPos(38, _HEIGHT + 3);
+	printf("    ");
+	printf("%d", death_ch);
+	death_ch = 0;
+}
 
 //===========================================================================
-
-
 
 VOID Classic()
 {
@@ -293,15 +526,17 @@ VOID Сustom()
 
 	for (;;)
 	{
-		_getch();
-		SecondGen();
-		_getch();
-		DeathGen();
-		_getch();
-		Rename();
+		//_getch();
+		CustomSecondGen();
+		//_getch();
+		CustomDeathGen();
+		//_getch();
+		CustomRename();
 		Ch();
 	}
 }
+
+//===========================================================================
 
 VOID Start()
 {
@@ -319,10 +554,8 @@ VOID Start()
 	}
 
 
-	WritePos(15, 15, f_red, "1.  Старт");
-	WritePos(15, 17, f_red, "2.  Настройки");
-	WritePos(15, 19, f_red, "3.  Сменить цветовую схему");
-	WritePos(15, 21, f_red, "4.  Выход");
+	WritePos(15, 13, f_red, "1.  Старт");
+	WritePos(15, 15, f_red, "2.  Выход");
 
 	do{
 	if (_kbhit()) key = _getch();
@@ -332,12 +565,10 @@ VOID Start()
 		{
 			key = 0;
 
-			WritePos(15, 15, f_red, "                      ");
-			WritePos(15, 15, f_red, "1.  Классический режим");
-			WritePos(15, 17, f_red, "                            ");
-			WritePos(15, 17, f_red, "2.  Режим с доп. настройками");
-			WritePos(15, 19, f_red, "                            ");
-			WritePos(15, 21, f_red, "                            ");
+			WritePos(15, 13, f_red, "                      ");
+			WritePos(15, 13, f_red, "1.  Классический режим");
+			WritePos(15, 15, f_red, "                            ");
+			WritePos(15, 15, f_red, "2.  Режим с доп. настройками");
 
 			do{
 			if (_kbhit()) key = _getch();
@@ -356,9 +587,7 @@ VOID Start()
 			}
 			} while (TRUE);
 		}
-		case '2': 
-		case '3': 
-		case '4': exit(0);
+		case '2': exit(0);
 	}
 	} while (TRUE);
 }
