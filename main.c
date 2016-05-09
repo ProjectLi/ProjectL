@@ -595,11 +595,13 @@ VOID Start()
 				{
 					//Стандартный, классический
 					Classic();
+					Start();
 				}
 				case '2':
 				{
 					//Пользовательский
 					Сustom();
+					Start();
 				}
 			}
 			} while (TRUE);
