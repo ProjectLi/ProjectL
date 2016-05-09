@@ -291,32 +291,36 @@ VOID CustomRename()
 	{
 		for (j = 1; j < _WIDTH; j++)
 		{
-			if (GetChar(j, i) == '0')
+			if (INFO[j][i] == '0')
 			{
+				INFO[j][i] = 3;
 				SetChar(j, i, c_black, ' ');
 			}
 			else
 			if (GetChar(j, i) == '2')
 			{
+				INFO[j][i] = 1;
+				SetChar(j, i, f_red, '1');
 				custom = rand() % 100000 + 1;
+				
 				if (custom > 0 && custom <= 10) //бессмертная клетка, шанс 0,01%
 				{
+					INFO[j][i] = 4;
 					SetChar(j, i, f_green, '3');
 				}
-				else
+				
 				if (custom > 10 && custom <= 110) //клетка-сметрник, шанс 0,1%
 				{
+					INFO[j][i] = 5;
 					SetChar(j, i, f_yellow, '4');
 				}
-				else
+				
 				if (custom > 110 && custom <= 210) //клетка-любовник, шанс 0,1%
 				{
+					INFO[j][i] = 6;
 					SetChar(j, i, f_magenta, '5');
 				}
-				else
-				{
-					SetChar(j, i, f_red, '1');
-				}
+				//
 			}
 		}
 	}
@@ -330,15 +334,18 @@ VOID CustomSecondGen()
 	{
 		for (j = 1; j < _WIDTH; j++)
 		{
-
-			if (GetChar(j, i - 1) == '5' || GetChar(j, i + 1) == '5' || GetChar(j - 1, i) == '5' || GetChar(j + 1, i) == '5' ||
-				GetChar(j + 1, i + 1) == '5' || GetChar(j + 1, i - 1) == '5' || GetChar(j - 1, i + 1) == '5' || GetChar(j - 1, i - 1) == '5')
+			
+			//если в радиусе есть клетка любовник, то клеткка сразу становится вторым поколением
+			if (INFO[j][i - 1] == 6 || INFO[j][i + 1] == 6 || INFO[j - 1][i] == 6 ||  INFO[j + 1][i] == 6 ||
+				INFO[j + 1][i + 1] == 6 || INFO[j + 1][i - 1] == 6 || INFO[j - 1][i + 1] == 6 || INFO[j - 1][i - 1] == 6)
 			{
+				INFO[j][i] = 2;
 				SetChar(j, i, f_blue, '2');
 				k++;
 			}
-
-			if (GetChar(j, i) == ' ')
+			
+			
+			if (INFO[j][i] == 3)
 			{
 
 				if (GetChar(j + 1, i + 1) == '1')
