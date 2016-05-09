@@ -185,48 +185,47 @@ VOID SecondGen()
 	{
 		for (j = 1; j < _WIDTH; j++)
 		{
-			if (GetChar(j, i) != '1' && GetChar(j, i) == ' ')
+			if (A[j][i] == 3)
 			{
 
-				if (GetChar(j + 1, i + 1) == '1')
+				if (A[j + 1][i + 1] == 1)
 				{
 					ch++;
 				}
 
-				if (GetChar(j - 1, i - 1) == '1')
+				if (A[j - 1][i - 1] == 1)
 				{
 					ch++;
 				}
 
-				if (GetChar(j + 1, i - 1) == '1')
+				if (A[j + 1][i - 1] == 1)
 				{
 					ch++;
 				}
 
-
-				if (GetChar(j - 1, i + 1) == '1')
+				if (A[j - 1][i + 1] == 1)
 				{
 					ch++;
 				}
 
 				//
 
-				if (GetChar(j + 1, i) == '1')
+				if (A[j + 1][i] == 1)
 				{
 					ch++;
 				}
 
-				if (GetChar(j, i + 1) == '1')
+				if (A[j][i + 1] == 1)
 				{
 					ch++;
 				}
 
-				if (GetChar(j - 1, i) == '1')
+				if (A[j - 1][i] == 1)
 				{
 					ch++;
 				}
 
-				if (GetChar(j, i - 1) == '1')
+				if (A[j][i - 1] == 1)
 				{
 					ch++;
 				}
@@ -234,24 +233,22 @@ VOID SecondGen()
 
 				if (ch == 3 || ch > 3)
 				{
-					SetChar(j, i, f_blue, '2');
-				}
-
-				ch = 0;
-
-				if (GetChar(j, i) == '2')
-				{
+					A[j][i] = 2;
+					SetChar(j, i, b_blue, '2');
 					k++;
 				}
 
-
+				ch = 0;
+				
+				
 			}
 		}
 	}
-
+	SetChar(42, _HEIGHT + 2, f_blue, ' ');
 	SetPos(42, _HEIGHT + 2);
 	printf("%d", k);
 }
+
 
 VOID Interface()
 {
