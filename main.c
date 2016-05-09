@@ -32,14 +32,18 @@ VOID Ch()
 {
 	INT i, j, k = 0, ch = 0;
 
-	for (i = 1; i < _HEIGHT - 1; i++)
+	for (i = 1; i < _HEIGHT; i++)
 	{
-		for (j = 1; j < _WIDTH - 1; j++)
+		for (j = 1; j < _WIDTH; j++)
 		{
 
-			if (GetChar(j, i) == '1')
+			if (A[j][i] == 1)
 			{
 				ch++;
+			}
+			if (A[j][i] == 3)
+			{
+				SetChar(j, i, c_black, ' ');
 			}
 		}
 	}
@@ -51,7 +55,6 @@ VOID Ch()
 	SetColor(f_red);
 	printf("%d", ch);
 }
-
 //Первое поколение, генерируемое случайно по всему полю.
 //Не гарантирую, что они смогут выжить ^_^
 VOID RandomFirstGen()
