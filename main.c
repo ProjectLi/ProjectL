@@ -517,20 +517,21 @@ VOID CustomDeathGen()
 VOID Classic()
 {
 	Interface();
-
+	DWORD key = 0;	
 	RandomFirstGen();
 	Ch();
 
-	for (;;)
+	do
 	{
-		_getch();
+		key = _getch();
 		SecondGen();
-		_getch();
+		//key = _getch();
 		DeathGen();
-		_getch();
+		//key = _getch();
 		Rename();
 		Ch();
-	}
+	} while(key != '0');
+	
 }
 
 VOID Сustom()
