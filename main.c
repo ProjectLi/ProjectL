@@ -57,6 +57,7 @@ VOID Ch()
 }
 //Первое поколение, генерируемое случайно по всему полю.
 //Не гарантирую, что они смогут выжить ^_^
+
 VOID RandomFirstGen()
 {
 	INT i, j, k;
@@ -81,20 +82,22 @@ VOID RandomFirstGen()
 //Название говорит само за себя, тут переименование клеток из мертвых в пустые, и из новорожденных в взрослых
 VOID Rename()
 {
-	INT i, j;
+	INT i, j, k = 0;
 
 	for (i = 1; i < _HEIGHT; i++)
 	{
 		for (j = 1; j < _WIDTH; j++)
 		{
-			if (GetChar(j, i) == '0')
+			if (A[j][i] == 0)
 			{
+				A[j][i] = 3;
 				SetChar(j, i, c_black, ' ');
 			}
 			else
-			if (GetChar(j, i) == '2')
+			if (A[j][i] == 2)
 			{
-				SetChar(j, i, f_red, '1');
+				A[j][i] = 1;
+				SetChar(j, i, f_red, 'o');
 			}
 		}
 	}
@@ -108,48 +111,48 @@ VOID DeathGen()
 	{
 		for (j = 1; j < _WIDTH; j++)
 		{
-			if (GetChar(j, i) == '1')
+			if (A[j][i] == 1)
 			{
 
-				if (GetChar(j + 1, i + 1) == '1' || GetChar(j + 1, i + 1) == '0')
+				if (A[j + 1][i + 1] == 1 || A[j + 1][i + 1] == 0)
 				{
 					ch++;
 				}
 
-				if (GetChar(j - 1, i - 1) == '1' || GetChar(j - 1, i - 1) == '0')
+				if (A[j - 1][i - 1] == 1 || A[j - 1][i - 1] == 0)
 				{
 					ch++;
 				}
 
-				if (GetChar(j + 1, i - 1) == '1' || GetChar(j + 1, i - 1) == '0')
+				if (A[j + 1][i - 1] == 1 || A[j + 1][i - 1] == 0)
 				{
 					ch++;
 				}
 
 
-				if (GetChar(j - 1, i + 1) == '1' || GetChar(j - 1, i + 1) == '0')
+				if (A[j - 1][i + 1] == 1 || A[j - 1][i + 1] == 0)
 				{
 					ch++;
 				}
 
 				//
 
-				if (GetChar(j + 1, i) == '1' || GetChar(j + 1, i) == '0')
+				if (A[j + 1][i] == 1 || A[j + 1][i] == 0)
 				{
 					ch++;
 				}
 
-				if (GetChar(j, i + 1) == '1' || GetChar(j, i + 1) == '0')
+				if (A[j][i + 1] == 1 || A[j][i + 1] == 0)
 				{
 					ch++;
 				}
 
-				if (GetChar(j - 1, i) == '1' || GetChar(j - 1, i) == '0')
+				if (A[j - 1][i] == 1 || A[j - 1][i] == 0)
 				{
 					ch++;
 				}
 
-				if (GetChar(j, i - 1) == '1' || GetChar(j, i - 1) == '0')
+				if (A[j][i - 1] == 1 || A[j][i - 1] == 0)
 				{
 					ch++;
 				}
@@ -157,7 +160,8 @@ VOID DeathGen()
 
 				if (ch < 2 || ch > 3)
 				{
-					SetChar(j, i, f_cyan, '0');
+					A[j][i] = 0;
+					SetChar(j, i, c_black, ' ');
 					death_ch++;
 				}
 
@@ -166,11 +170,12 @@ VOID DeathGen()
 		}
 	}
 
-	SetPos(38, _HEIGHT + 3);
-	printf("    ");
+	SetChar(38, _HEIGHT + 3, f_cyan, ' ');
+	printf("   ");
 	printf("%d", death_ch);
 	death_ch = 0;
 }
+
 
 VOID SecondGen()
 {
