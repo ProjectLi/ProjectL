@@ -37,11 +37,11 @@ VOID Ch()
 		for (j = 1; j < _WIDTH; j++)
 		{
 
-			if (A[j][i] == 1)
+			if (INFO[j][i] == 1)
 			{
 				ch++;
 			}
-			if (A[j][i] == 3)
+			if (INFO[j][i] == 3)
 			{
 				SetChar(j, i, c_black, ' ');
 			}
@@ -66,10 +66,11 @@ VOID RandomFirstGen()
 	{
 		i = rand() % 24 + 1;
 		j = rand() % 49 + 1;
-		if (GetChar(i, j) != '1' && GetChar(i, j) != '#')
+		if (INFO[j][i] != 1)
 		{
+			INFO[j][i] = 1;
 			SetChar(j, i, f_red, '1');
-			SetPos(42, _HEIGHT + 1);
+			SetPos(0, 0);
 		}
 		else
 		{
@@ -88,20 +89,21 @@ VOID Rename()
 	{
 		for (j = 1; j < _WIDTH; j++)
 		{
-			if (A[j][i] == 0)
+			if (INFO[j][i] == 0)
 			{
-				A[j][i] = 3;
+				INFO[j][i] = 3;
 				SetChar(j, i, c_black, ' ');
 			}
 			else
-			if (A[j][i] == 2)
+			if (INFO[j][i] == 2)
 			{
-				A[j][i] = 1;
-				SetChar(j, i, f_red, 'o');
+				INFO[j][i] = 1;
+				SetChar(j, i, f_red, '1');
 			}
 		}
 	}
 }
+
 
 VOID DeathGen()
 {
@@ -111,48 +113,48 @@ VOID DeathGen()
 	{
 		for (j = 1; j < _WIDTH; j++)
 		{
-			if (A[j][i] == 1)
+			if (INFO[j][i] == 1)
 			{
 
-				if (A[j + 1][i + 1] == 1 || A[j + 1][i + 1] == 0)
+				if (INFO[j + 1][i + 1] == 1 || INFO[j + 1][i + 1] == 0)
 				{
 					ch++;
 				}
 
-				if (A[j - 1][i - 1] == 1 || A[j - 1][i - 1] == 0)
+				if (INFO[j - 1][i - 1] == 1 || INFO[j - 1][i - 1] == 0)
 				{
 					ch++;
 				}
 
-				if (A[j + 1][i - 1] == 1 || A[j + 1][i - 1] == 0)
+				if (INFO[j + 1][i - 1] == 1 || INFO[j + 1][i - 1] == 0)
 				{
 					ch++;
 				}
 
 
-				if (A[j - 1][i + 1] == 1 || A[j - 1][i + 1] == 0)
+				if (INFO[j - 1][i + 1] == 1 || INFO[j - 1][i + 1] == 0)
 				{
 					ch++;
 				}
 
 				//
 
-				if (A[j + 1][i] == 1 || A[j + 1][i] == 0)
+				if (INFO[j + 1][i] == 1 || INFO[j + 1][i] == 0)
 				{
 					ch++;
 				}
 
-				if (A[j][i + 1] == 1 || A[j][i + 1] == 0)
+				if (INFO[j][i + 1] == 1 || INFO[j][i + 1] == 0)
 				{
 					ch++;
 				}
 
-				if (A[j - 1][i] == 1 || A[j - 1][i] == 0)
+				if (INFO[j - 1][i] == 1 || INFO[j - 1][i] == 0)
 				{
 					ch++;
 				}
 
-				if (A[j][i - 1] == 1 || A[j][i - 1] == 0)
+				if (INFO[j][i - 1] == 1 || INFO[j][i - 1] == 0)
 				{
 					ch++;
 				}
@@ -160,7 +162,7 @@ VOID DeathGen()
 
 				if (ch < 2 || ch > 3)
 				{
-					A[j][i] = 0;
+					INFO[j][i] = 0;
 					SetChar(j, i, c_black, ' ');
 					death_ch++;
 				}
@@ -173,8 +175,12 @@ VOID DeathGen()
 	SetChar(38, _HEIGHT + 3, f_cyan, ' ');
 	printf("   ");
 	printf("%d", death_ch);
+	ALL_death_ch += death_ch;
 	death_ch = 0;
+	SetChar(39, _HEIGHT + 4, f_white, ' ');
+	printf("%d", ALL_death_ch);
 }
+
 
 
 VOID SecondGen()
@@ -185,47 +191,47 @@ VOID SecondGen()
 	{
 		for (j = 1; j < _WIDTH; j++)
 		{
-			if (A[j][i] == 3)
+			if (INFO[j][i] == 3)
 			{
 
-				if (A[j + 1][i + 1] == 1)
+				if (INFO[j + 1][i + 1] == 1)
 				{
 					ch++;
 				}
 
-				if (A[j - 1][i - 1] == 1)
+				if (INFO[j - 1][i - 1] == 1)
 				{
 					ch++;
 				}
 
-				if (A[j + 1][i - 1] == 1)
+				if (INFO[j + 1][i - 1] == 1)
 				{
 					ch++;
 				}
 
-				if (A[j - 1][i + 1] == 1)
+				if (INFO[j - 1][i + 1] == 1)
 				{
 					ch++;
 				}
 
 				//
 
-				if (A[j + 1][i] == 1)
+				if (INFO[j + 1][i] == 1)
 				{
 					ch++;
 				}
 
-				if (A[j][i + 1] == 1)
+				if (INFO[j][i + 1] == 1)
 				{
 					ch++;
 				}
 
-				if (A[j - 1][i] == 1)
+				if (INFO[j - 1][i] == 1)
 				{
 					ch++;
 				}
 
-				if (A[j][i - 1] == 1)
+				if (INFO[j][i - 1] == 1)
 				{
 					ch++;
 				}
@@ -233,7 +239,7 @@ VOID SecondGen()
 
 				if (ch == 3 || ch > 3)
 				{
-					A[j][i] = 2;
+					INFO[j][i] = 2;
 					SetChar(j, i, b_blue, '2');
 					k++;
 				}
