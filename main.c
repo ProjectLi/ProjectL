@@ -26,6 +26,39 @@
 
 int INFO[_WIDTH + 1][_HEIGHT + 1];
 
+//Очистка массива, все клетки равны 3, что соответсвует пустому месту
+
+VOID Clear()
+{
+	for (int i = 0; i < _HEIGHT + 1; i++)
+	{
+		for (int j = 0; j < _WIDTH + 1; j++)
+		{
+			INFO[j][i] = 3;
+		}
+	}
+}
+
+//Та же отчистка, но только границ, которые не выводятся на экран, чтобы значения там не мешали процессу
+
+VOID ClearScope()
+{
+	for (int i = 0; i < _HEIGHT + 1; i++)
+	{
+		INFO[0][i] = 3;    //Левая граница по вертикали
+		INFO[_WIDTH][i] = 3;    //Правая граница по вертикали
+	}
+	
+	
+	for (int j = 0; j < _WIDTH + 1; j++)
+	{
+			
+		INFO[j][0] = 3;   //Верхняя сторона по горизонтали
+		INFO[j][_HEIGHT]     //Нижняя сторона по горизонтали
+	}
+	
+}
+
 //===========================================================================
 //Отдельно вынесенный счетчик первого поколения (красные).
 VOID Ch()
@@ -291,16 +324,17 @@ VOID CustomRename()
 	{
 		for (j = 1; j < _WIDTH; j++)
 		{
-			if (INFO[j][i] == '0')
+			if (INFO[j][i] == 0)
 			{
 				INFO[j][i] = 3;
 				SetChar(j, i, c_black, ' ');
 			}
 			else
-			if (GetChar(j, i) == '2')
+			if (INFO[j][i] == 2)
 			{
 				INFO[j][i] = 1;
 				SetChar(j, i, f_red, '1');
+				
 				custom = rand() % 100000 + 1;
 				
 				if (custom > 0 && custom <= 10) //бессмертная клетка, шанс 0,01%
@@ -343,50 +377,51 @@ VOID CustomSecondGen()
 				SetChar(j, i, f_blue, '2');
 				k++;
 			}
-			
+			//если нет то проверяем, может клетка итак должна была стать таковой
+			else
 			
 			if (INFO[j][i] == 3)
 			{
 
-				if (GetChar(j + 1, i + 1) == '1')
+				if (INFO[j + 1][i + 1] == 1)
 				{
 					ch++;
 				}
 
-				if (GetChar(j - 1, i - 1) == '1')
+				if (INFO[j - 1][i - 1] == 1)
 				{
 					ch++;
 				}
 
-				if (GetChar(j + 1, i - 1) == '1')
+				if (INFO[j + 1][i - 1] == 1)
 				{
 					ch++;
 				}
 
 
-				if (GetChar(j - 1, i + 1) == '1')
+				if (INFO[j - 1][i + 1] == 1)
 				{
 					ch++;
 				}
 
 				//
 
-				if (GetChar(j + 1, i) == '1')
+				if (INFO[j + 1][i] == 1)
 				{
 					ch++;
 				}
 
-				if (GetChar(j, i + 1) == '1')
+				if (INFO[j][i + 1] == 1)
 				{
 					ch++;
 				}
 
-				if (GetChar(j - 1, i) == '1')
+				if (INFO[j - 1][i] == 1)
 				{
 					ch++;
 				}
 
-				if (GetChar(j, i - 1) == '1')
+				if (INFO[j][i - 1] == 1)
 				{
 					ch++;
 				}
@@ -572,7 +607,7 @@ VOID Start()
 {
 	INT i, j;
 	DWORD key = 0;
-
+	Clear();
 	for (i = 0; i <= _HEIGHT + 7; i++)
 	{
 		for (j = 0; j <= _WIDTH; j++)
