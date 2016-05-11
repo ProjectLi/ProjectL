@@ -88,17 +88,6 @@ BOOL InitConsole(LPSTR Title, SHORT x, SHORT y, WORD color)
 	return console.propEx.dwSize;
 }
 
-// Gets current console size
-/*inline*/ SHORT GetSizeX()
-{
-	return console.propEx.dwSize.X;
-}
-
-// Gets current console size
-/*inline*/ SHORT GetSizeY()
-{
-	return console.propEx.dwSize.Y;
-}
 
 
 
@@ -108,17 +97,7 @@ BOOL InitConsole(LPSTR Title, SHORT x, SHORT y, WORD color)
 	return console.pos;
 }
 
-// Gets current cursor position in console
-/*inline*/ SHORT GetPosX()
-{
-	return console.pos.X;
-}
 
-// Gets current cursor position in console
-/*inline*/ SHORT GetPosY()
-{
-	return console.pos.Y;
-}
 
 // Sets the cursor position to specified coordinates
 /*inline*/ BOOL SetPos(SHORT x, SHORT y)
@@ -126,13 +105,6 @@ BOOL InitConsole(LPSTR Title, SHORT x, SHORT y, WORD color)
 	console.pos.X = x;
 	console.pos.Y = y;
 	return SetConsoleCursorPosition(console.hOut, console.pos);
-}
-
-// Sets the cursor position to specified coordinates
-/*inline*/ BOOL SetPosEx(COORD _pos)
-{
-	console.pos = _pos;
-	return SetConsoleCursorPosition(console.hOut, _pos);
 }
 
 
@@ -151,6 +123,7 @@ BOOL InitConsole(LPSTR Title, SHORT x, SHORT y, WORD color)
 	console.pos.Y = 0;
 	return FillConsoleOutputAttribute(console.hOut, color, count, console.pos, &tmpDword) && FillConsoleOutputCharacter(console.hOut, ' ', count, console.pos, &tmpDword);
 }
+
 
 // Changes console window size to specified rows and columns count
 BOOL ResizeConsole(SHORT x, SHORT y)
@@ -261,52 +234,9 @@ extern /*inline*/ BOOL Write(WORD color, LPSTR string)
 	return FALSE;
 }
 
-// Writes plain text string to console output with selected attributes from cursor position
-/*inline*/ BOOL WritePosEx(COORD _pos, WORD color, LPSTR string)
-{
-	if (SetPosEx(_pos) && SetConsoleTextAttribute(console.hOut, color))
-	{
-		printf(string);
-		return TRUE;
-	}
-	return FALSE;
-}
 
-// Filles console output with selected character and attributes from cursor position qty times
-/*inline*/ BOOL FillPos(SHORT x, SHORT y, WORD color, CHAR _ch, DWORD qty)
-{
-	if (SetPos(x, y))
-	{
-		return FillConsoleOutputAttribute(console.hOut, color, qty, console.pos, &tmpDword) && FillConsoleOutputCharacter(console.hOut, _ch, qty, console.pos, &tmpDword);
-	}
-	return FALSE;
-}
 
-// Filles console output with selected character and attributes from cursor position qty times
-/*inline*/ BOOL FillPosEx(COORD _pos, WORD color, CHAR _ch, DWORD qty)
-{
-	if (SetPosEx(_pos))
-	{
-		return FillConsoleOutputAttribute(console.hOut, color, qty, console.pos, &tmpDword) && FillConsoleOutputCharacter(console.hOut, _ch, qty, console.pos, &tmpDword);
-	}
-	return FALSE;
-}
 
-// Moves rectangular text area to new location
-/*inline*/ BOOL MoveRect(SHORT top, SHORT bottom, SHORT left, SHORT right, SHORT x, SHORT y, WORD color, CHAR _ch)
-{
-	SMALL_RECT _rct = { left, top, right, bottom };
-	COORD _pos = { x, y };
-	CHAR_INFO _tmp = { _ch, color };
-	return ScrollConsoleScreenBuffer(console.hOut, &_rct, NULL, _pos, &_tmp);
-}
-
-// Moves rectangular text area to new location
-/*inline*/ BOOL MoveRectEx(SMALL_RECT _rct, COORD _pos, WORD color, CHAR _ch)
-{
-	CHAR_INFO _tmp = { _ch, color };
-	return ScrollConsoleScreenBuffer(console.hOut, &_rct, NULL, _pos, &_tmp);
-}
 
 
 
