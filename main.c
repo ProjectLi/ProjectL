@@ -1,4 +1,9 @@
-//Вроде доделанная версия от Мазурова Данила ИП-512
+//
+//  main.c
+//  The game of life
+//
+//  Created by Мазуров данил on 2.04.16.
+//  Copyright © 2016 Danil Mazurov. All rights reserved.
 //Осталось комменты наделать
 
 #include <stdio.h>
