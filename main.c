@@ -434,6 +434,7 @@ VOID CustomSecondGen()
 
 				if (ch == 3 || ch > 3)
 				{
+					INFO[j][i] = 2;
 					SetChar(j, i, f_blue, '2');
 					k++;
 				}
