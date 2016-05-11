@@ -457,48 +457,48 @@ VOID CustomDeathGen()
 	{
 		for (j = 1; j < _WIDTH; j++)
 		{
-			if (GetChar(j, i) == '1' || GetChar(j, i) == '5')
+			if (INFO[j][i] == 1 || INFO[j][i] == 6)
 			{
 
-				if (GetChar(j + 1, i + 1) == '1' || GetChar(j + 1, i + 1) == '5' || GetChar(j + 1, i + 1) == '3' || GetChar(j + 1, i + 1) == '0')
+				if (INFO[j + 1][i + 1] == 1 || INFO[j + 1][i + 1] == 6 || INFO[j + 1][i + 1] == 4 || INFO[j + 1][i + 1] == 0)
 				{
 					ch++;
 				}
 
-				if (GetChar(j - 1, i - 1) == '1' || GetChar(j - 1, i - 1) == '5' || GetChar(j - 1, i - 1) == '3' || GetChar(j - 1, i - 1) == '0')
+				if (INFO[j - 1][i - 1] == 1 || INFO[j - 1][i - 1] == 6 || INFO[j - 1][i - 1] == 4 || INFO[j - 1][i - 1] == 0)
 				{
 					ch++;
 				}
 
-				if (GetChar(j + 1, i - 1) == '1' || GetChar(j + 1, i - 1) == '5' || GetChar(j + 1, i - 1) == '3' || GetChar(j + 1, i - 1) == '0')
+				if (INFO[j + 1][i - 1] == 1 || INFO[j + 1][i - 1] == 6 || INFO[j + 1][i - 1] == 4 || INFO[j + 1][i - 1] == 0)
 				{
 					ch++;
 				}
 
 
-				if (GetChar(j - 1, i + 1) == '1' || GetChar(j - 1, i + 1) == '5' || GetChar(j - 1, i + 1) == '3' || GetChar(j - 1, i + 1) == '0')
+				if (INFO[j - 1][i + 1] == 1 || INFO[j - 1][i + 1] == 6 || INFO[j - 1][i + 1] == 4 || INFO[j - 1][i + 1] == 0)
 				{
 					ch++;
 				}
 
 				//
 
-				if (GetChar(j + 1, i) == '1' || GetChar(j + 1, i) == '5' || GetChar(j + 1, i) == '3' || GetChar(j + 1, i) == '0')
+				if (INFO[j + 1][i] == 1 || INFO[j + 1][i] == 6 || INFO[j + 1][i] == 4 || INFO[j + 1][i] == 0)
 				{
 					ch++;
 				}
 
-				if (GetChar(j, i + 1) == '1' || GetChar(j, i + 1) == '5' || GetChar(j, i + 1) == '3' || GetChar(j, i + 1) == '0')
+				if (INFO[j][i + 1] == 1 || INFO[j][i + 1] == 6 || INFO[j][i + 1] == 4 || INFO[j][i + 1] == 0)
 				{
 					ch++;
 				}
 
-				if (GetChar(j - 1, i) == '1' || GetChar(j - 1, i) == '5' || GetChar(j - 1, i) == '3' || GetChar(j - 1, i) == '0')
+				if (INFO[j - 1][i] == 1 || INFO[j - 1][i] == 6 || INFO[j - 1][i] == 4 || INFO[j - 1][i] == 0)
 				{
 					ch++;
 				}
 
-				if (GetChar(j, i - 1) == '1' || GetChar(j, i - 1) == '5' || GetChar(j, i - 1) == '3' || GetChar(j, i - 1) == '0')
+				if (INFO[j][i - 1] == 1 || INFO[j][i - 1] == 6 || INFO[j][i - 1] == 4 || INFO[j][i - 1] == 0)
 				{
 					ch++;
 				}
@@ -506,6 +506,7 @@ VOID CustomDeathGen()
 
 				if (ch < 2 || ch > 3)
 				{
+					INFO[j][i] = 0;
 					SetChar(j, i, f_cyan, '0');
 					death_ch++;
 				}
@@ -515,31 +516,39 @@ VOID CustomDeathGen()
 			else
 			if (GetChar(j, i) == '4')
 			{
+				INFO[j][i] = 0;
 				SetChar(j, i, f_cyan, '0');
-
-				if (GetChar(j + 1, i) != '#')
+				
+				if (j == 1 || i == 1 || j == _WIDTH - 1 || i == _HEIGHT - 1)
 				{
 					SetChar(j + 1, i, f_cyan, '0');
+					SetChar(j, i + 1, f_cyan, '0');
+					SetChar(j - 1, i, f_cyan, '0');
+					SetChar(j, i - 1, f_cyan, '0');
+				}
+				if (GetChar(j + 1, i) != '#')
+				{
+					
 				}
 
 				if (GetChar(j, i + 1) != '#')
 				{
-					SetChar(j, i + 1, f_cyan, '0');
+					
 				}
 
 				if (GetChar(j - 1, i) != '#')
 				{
-					SetChar(j - 1, i, f_cyan, '0');
+					
 				}
 
 				if (GetChar(j, i - 1) != '#')
 				{
-					SetChar(j, i - 1, f_cyan, '0');
+					
 				}
 
 				if (GetChar(j + 1, i + 1) != '#')
 				{
-					SetChar(j + 1, i + 1, f_cyan, '0');
+					
 				}
 
 				if (GetChar(j + 1, i - 1) != '#')
