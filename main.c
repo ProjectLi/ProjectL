@@ -534,13 +534,29 @@ VOID CustomDeathGen()
 				//Даже если эти клетки попадут в границы мы просто отчистим после этого их обратно
 				
 					SetChar(j + 1, i, f_cyan, '0');
+					INFO[j + 1][i] = 0;
+					
 					SetChar(j, i + 1, f_cyan, '0');
+					INFO[j][i + 1] = 0;
+					
 					SetChar(j - 1, i, f_cyan, '0');
+					INFO[j - 1][i] = 0;
+					
 					SetChar(j, i - 1, f_cyan, '0');
+					INFO[j][i - 1] = 0;
+					
 					SetChar(j + 1, i + 1, f_cyan, '0');
+					INFO[j + 1][i + 1] = 0;
+					
 					SetChar(j + 1, i - 1, f_cyan, '0');
+					INFO[j + 1][i - 1] = 0;
+					
 					SetChar(j - 1, i + 1, f_cyan, '0');
+					INFO[j - 1][i + 1] = 0;
+					
 					SetChar(j - 1, i - 1, f_cyan, '0');
+					INFO[j - 1][i - 1] = 0;
+					
 				//собственно функция отчистки, которая включает и прорисовку границ
 				ClearScope();
 			}
@@ -584,11 +600,11 @@ VOID Сustom()
 
 	do
 	{
-		key = _getch();
+		_getch();
 		CustomSecondGen();
-		//_getch();
+		_getch();
 		CustomDeathGen();
-		//_getch();
+		key = _getch();
 		CustomRename();
 		Ch();
 	} while(key != '0');
