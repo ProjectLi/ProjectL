@@ -2,7 +2,7 @@
 //  main.c
 //  The game of life
 //  Created by Mazurov Danil, Sabitov Evgeniy on 2.04.16.
-//  Copyright © 2016 Team One. All rights reserved.
+//  Copyright © 2016 Team Unknown. All rights reserved.
 //Осталось комменты наделать
 
 #include <stdio.h>
