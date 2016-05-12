@@ -22,7 +22,7 @@ Conway chose his rules carefully, after considerable experimentation, to meet th
     The rules should be as simple as possible, whilst adhering to the above constraints.
   
 ## Contact development team:
-###Github: github.com/orgs/ProjectLi/teams/team-one
+###Github: github.com/orgs/ProjectLi/teams/Team-Unknown
 ###E-mail: zvinnik@me.com
 
 _____________________________________________________________________________________________________________________
@@ -55,7 +55,7 @@ _____________________________________
 _____________________________________
 ## Контакты команды разработчиков Team One:
 
-###Github: github.com/orgs/ProjectLi/teams/team-one
+###Github: github.com/orgs/ProjectLi/teams/Team-Unknown
 
 ###E-mail: zvinnik@me.com
 
@@ -64,4 +64,4 @@ _____________________________________
 
 Created by Ili Daniil, Em Alexander on 1.03.16.
 
-Copyright © 2016 Team One. All rights reserved.
+Copyright © 2016 Team Unknown. All rights reserved.
