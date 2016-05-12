@@ -62,6 +62,21 @@ VOID ClearScope()
 		INFO[j][_HEIGHT]     //Нижняя сторона по горизонтали
 	}
 	
+	// Up row
+	FillPos(0, 0, f_darkyellow, '#', _WIDTH + 1);
+	
+	// Down row
+	
+	FillPos(0, _HEIGHT, f_darkyellow, '#', _WIDTH + 1);
+	FillPos(0, _HEIGHT + 6, f_darkyellow, '#', _WIDTH + 1);
+	
+	// Side columns
+	
+	for (i = 1; i < _HEIGHT + 6; i += 1)
+	{
+		SetChar(0, i, f_darkyellow, '#');
+		SetChar(_WIDTH, i, f_darkyellow, '#');
+	}
 }
 
 //===========================================================================
@@ -519,52 +534,18 @@ VOID CustomDeathGen()
 				INFO[j][i] = 0;
 				SetChar(j, i, f_cyan, '0');
 				
-				if (j == 1 || i == 1 || j == _WIDTH - 1 || i == _HEIGHT - 1)
-				{
+				//Даже если эти клетки попадут в границы мы просто отчистим после этого их обратно
+				
 					SetChar(j + 1, i, f_cyan, '0');
 					SetChar(j, i + 1, f_cyan, '0');
 					SetChar(j - 1, i, f_cyan, '0');
 					SetChar(j, i - 1, f_cyan, '0');
-				}
-				if (GetChar(j + 1, i) != '#')
-				{
-					
-				}
-
-				if (GetChar(j, i + 1) != '#')
-				{
-					
-				}
-
-				if (GetChar(j - 1, i) != '#')
-				{
-					
-				}
-
-				if (GetChar(j, i - 1) != '#')
-				{
-					
-				}
-
-				if (GetChar(j + 1, i + 1) != '#')
-				{
-					
-				}
-
-				if (GetChar(j + 1, i - 1) != '#')
-				{
+					SetChar(j + 1, i + 1, f_cyan, '0');
 					SetChar(j + 1, i - 1, f_cyan, '0');
-				}
-
-				if (GetChar(j - 1, i + 1) != '#')
-				{
 					SetChar(j - 1, i + 1, f_cyan, '0');
-				}
-
-				if (GetChar(j - 1, i - 1) != '#')
-				{
 					SetChar(j - 1, i - 1, f_cyan, '0');
-				}
+				//собственно функция отчистки, которая включает и прорисовку границ
+				ClearScope();
 			}
 		}
 	}
@@ -600,20 +581,20 @@ VOID Classic()
 VOID Сustom()
 {
 	Interface();
-
+	DWORD key = 0;
 	RandomFirstGen();
 	Ch();
 
-	for (;;)
+	do
 	{
-		//_getch();
+		key = _getch();
 		CustomSecondGen();
 		//_getch();
 		CustomDeathGen();
 		//_getch();
 		CustomRename();
 		Ch();
-	}
+	} while(key != '0');
 }
 
 //===========================================================================
