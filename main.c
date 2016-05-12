@@ -48,18 +48,19 @@ VOID Clear()
 
 VOID ClearScope()
 {
-	for (int i = 0; i < _HEIGHT + 1; i++)
+	int j, i;
+	for (i = 0; i < _HEIGHT + 1; i++)
 	{
 		INFO[0][i] = 3;    //Левая граница по вертикали
 		INFO[_WIDTH][i] = 3;    //Правая граница по вертикали
 	}
 	
 	
-	for (int j = 0; j < _WIDTH + 1; j++)
+	for (j = 0; j < _WIDTH + 1; j++)
 	{
 			
 		INFO[j][0] = 3;   //Верхняя сторона по горизонтали
-		INFO[j][_HEIGHT]     //Нижняя сторона по горизонтали
+		INFO[j][_HEIGHT];     //Нижняя сторона по горизонтали
 	}
 	
 	// Up row
@@ -228,10 +229,7 @@ VOID DeathGen()
 	SetChar(38, _HEIGHT + 3, f_cyan, ' ');
 	printf("   ");
 	printf("%d", death_ch);
-	ALL_death_ch += death_ch;
 	death_ch = 0;
-	SetChar(39, _HEIGHT + 4, f_white, ' ');
-	printf("%d", ALL_death_ch);
 }
 
 
