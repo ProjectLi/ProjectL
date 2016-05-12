@@ -15,6 +15,7 @@
 
 //Ch - обозначает счетчик
 
+
 #define _HEIGHT	25
 #define _WIDTH	50
 #define _SIZELIFE 100
