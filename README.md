@@ -1,8 +1,3 @@
-//
-//  ReadMe
-//  The game of life
-//  Created by Ili Daniil, Em Alexander on 1.03.16.
-//  Copyright © 2016 Team One. All rights reserved.
 #Welcome to the ProjectL
 
 #Rules
@@ -26,9 +21,9 @@ Conway chose his rules carefully, after considerable experimentation, to meet th
     There should be potential for von Neumann universal constructors.
     The rules should be as simple as possible, whilst adhering to the above constraints.
   
-### Contact development team:
-Github: github.com/orgs/ProjectLi/teams/team-one
-E-mail: zvinnik@me.com
+## Contact development team:
+###Github: github.com/orgs/ProjectLi/teams/team-one
+###E-mail: zvinnik@me.com
 
 _____________________________________________________________________________________________________________________
 
@@ -58,6 +53,15 @@ _____________________________________
 Эти простые правила приводят к огромному разнообразию форм, которые могут возникнуть в игре.
 Игрок не принимает прямого участия в игре (он является наблюдателем).
 _____________________________________
-### Контакты команды разработчиков Team One:
-Github: github.com/orgs/ProjectLi/teams/team-one
-E-mail: zvinnik@me.com
+## Контакты команды разработчиков Team One:
+
+###Github: github.com/orgs/ProjectLi/teams/team-one
+
+###E-mail: zvinnik@me.com
+
+
+#The game of life
+
+Created by Ili Daniil, Em Alexander on 1.03.16.
+
+Copyright © 2016 Team One. All rights reserved.
