@@ -15,6 +15,7 @@
 
 //Ch - обозначает счетчик
 
+
 #define _HEIGHT	25
 #define _WIDTH	50
 #define _SIZELIFE 100
@@ -31,6 +32,7 @@
 int INFO[_WIDTH + 1][_HEIGHT + 1];
 
 //Очистка массива, все клетки равны 3, что соответсвует пустому месту
+
 
 VOID Clear()
 {
@@ -122,7 +124,7 @@ VOID RandomFirstGen()
 		if (INFO[j][i] != 1)
 		{
 			INFO[j][i] = 1;
-			SetChar(j, i, f_red, '1');
+			SetChar(j, i, b_red, ' ');
 			SetPos(0, 0);
 		}
 		else
@@ -151,7 +153,7 @@ VOID Rename()
 			if (INFO[j][i] == 2)
 			{
 				INFO[j][i] = 1;
-				SetChar(j, i, f_red, '1');
+				SetChar(j, i, b_red, ' ');
 			}
 		}
 	}
@@ -225,7 +227,7 @@ VOID DeathGen()
 		}
 	}
 
-	SetChar(38, _HEIGHT + 3, f_cyan, ' ');
+	SetChar(38, _HEIGHT + 3, b_cyan, ' ');
 	printf("   ");
 	printf("%d", death_ch);
 	death_ch = 0;
@@ -290,7 +292,7 @@ VOID SecondGen()
 				if (ch == 3 || ch > 3)
 				{
 					INFO[j][i] = 2;
-					SetChar(j, i, b_blue, '2');
+					SetChar(j, i, b_blue, ' ');
 					k++;
 				}
 
@@ -350,26 +352,26 @@ VOID CustomRename()
 			if (INFO[j][i] == 2)
 			{
 				INFO[j][i] = 1;
-				SetChar(j, i, f_red, '1');
+				SetChar(j, i, b_red, ' ');
 				
 				custom = rand() % 100000 + 1;
 				
 				if (custom > 0 && custom <= 10) //бессмертная клетка, шанс 0,01%
 				{
 					INFO[j][i] = 4;
-					SetChar(j, i, f_green, '3');
+					SetChar(j, i, b_green, ' ');
 				}
 				
 				if (custom > 10 && custom <= 110) //клетка-сметрник, шанс 0,1%
 				{
 					INFO[j][i] = 5;
-					SetChar(j, i, f_yellow, '4');
+					SetChar(j, i, b_yellow, ' ');
 				}
 				
 				if (custom > 110 && custom <= 210) //клетка-любовник, шанс 0,1%
 				{
 					INFO[j][i] = 6;
-					SetChar(j, i, f_magenta, '5');
+					SetChar(j, i, b_magenta, ' ');
 				}
 				//
 			}
@@ -391,7 +393,7 @@ VOID CustomSecondGen()
 				INFO[j + 1][i + 1] == 6 || INFO[j + 1][i - 1] == 6 || INFO[j - 1][i + 1] == 6 || INFO[j - 1][i - 1] == 6)
 			{
 				INFO[j][i] = 2;
-				SetChar(j, i, f_blue, '2');
+				SetChar(j, i, b_blue, ' ');
 				k++;
 			}
 			//если нет то проверяем, может клетка итак должна была стать таковой
@@ -447,7 +449,7 @@ VOID CustomSecondGen()
 				if (ch == 3 || ch > 3)
 				{
 					INFO[j][i] = 2;
-					SetChar(j, i, f_blue, '2');
+					SetChar(j, i, b_blue, ' ');
 					k++;
 				}
 
@@ -456,7 +458,7 @@ VOID CustomSecondGen()
 			}
 		}
 	}
-
+	SetColor(f_blue);
 	SetPos(42, _HEIGHT + 2);
 	printf("%d", k);
 }
@@ -519,42 +521,42 @@ VOID CustomDeathGen()
 				if (ch < 2 || ch > 3)
 				{
 					INFO[j][i] = 0;
-					SetChar(j, i, f_cyan, '0');
+					SetChar(j, i, b_cyan, ' ');
 					death_ch++;
 				}
 
 				ch = 0;
 			}
 			else
-			if (GetChar(j, i) == '4')
+			if (INFO[j][i] == 5)
 			{
 				INFO[j][i] = 0;
-				SetChar(j, i, f_cyan, '0');
+				SetChar(j, i, b_cyan, ' ');
 				
 				//Даже если эти клетки попадут в границы мы просто отчистим после этого их обратно
 				
-					SetChar(j + 1, i, f_cyan, '0');
+					SetChar(j + 1, i, b_cyan, ' ');
 					INFO[j + 1][i] = 0;
 					
-					SetChar(j, i + 1, f_cyan, '0');
+					SetChar(j, i + 1, b_cyan, ' ');
 					INFO[j][i + 1] = 0;
 					
-					SetChar(j - 1, i, f_cyan, '0');
+					SetChar(j - 1, i, b_cyan, ' ');
 					INFO[j - 1][i] = 0;
 					
-					SetChar(j, i - 1, f_cyan, '0');
+					SetChar(j, i - 1, b_cyan, ' ');
 					INFO[j][i - 1] = 0;
 					
-					SetChar(j + 1, i + 1, f_cyan, '0');
+					SetChar(j + 1, i + 1, b_cyan, ' ');
 					INFO[j + 1][i + 1] = 0;
 					
-					SetChar(j + 1, i - 1, f_cyan, '0');
+					SetChar(j + 1, i - 1, b_cyan, ' ');
 					INFO[j + 1][i - 1] = 0;
 					
-					SetChar(j - 1, i + 1, f_cyan, '0');
+					SetChar(j - 1, i + 1, b_cyan, ' ');
 					INFO[j - 1][i + 1] = 0;
 					
-					SetChar(j - 1, i - 1, f_cyan, '0');
+					SetChar(j - 1, i - 1, b_cyan, ' ');
 					INFO[j - 1][i - 1] = 0;
 					
 				//собственно функция отчистки, которая включает и прорисовку границ
@@ -562,7 +564,7 @@ VOID CustomDeathGen()
 			}
 		}
 	}
-
+	SetColor(f_cyan);
 	SetPos(38, _HEIGHT + 3);
 	printf("    ");
 	printf("%d", death_ch);
@@ -591,7 +593,7 @@ VOID Classic()
 	
 }
 
-VOID Сustom()
+VOID Custom()
 {
 	Interface();
 	DWORD key = 0;
@@ -657,7 +659,7 @@ VOID Start()
 				case '2':
 				{
 					//Пользовательский
-					Сustom();
+					Custom();
 					Start();
 				}
 			}
@@ -690,3 +692,4 @@ INT main()
 
 	return 0;
 }
+
