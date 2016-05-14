@@ -53,25 +53,25 @@ VOID ClearScope()
 		INFO[0][i] = 3;    //Левая граница по вертикали
 		INFO[_WIDTH][i] = 3;    //Правая граница по вертикали
 	}
-	
-	
+
+
 	for (j = 0; j < _WIDTH + 1; j++)
 	{
-			
+
 		INFO[j][0] = 3;   //Верхняя сторона по горизонтали
 		INFO[j][_HEIGHT];     //Нижняя сторона по горизонтали
 	}
-	
+
 	// Up row
 	FillPos(0, 0, f_darkyellow, '#', _WIDTH + 1);
-	
+
 	// Down row
-	
+
 	FillPos(0, _HEIGHT, f_darkyellow, '#', _WIDTH + 1);
 	FillPos(0, _HEIGHT + 6, f_darkyellow, '#', _WIDTH + 1);
-	
+
 	// Side columns
-	
+
 	for (i = 1; i < _HEIGHT + 6; i += 1)
 	{
 		SetChar(0, i, f_darkyellow, '#');
@@ -94,6 +94,7 @@ VOID Ch()
 			{
 				ch++;
 			}
+			
 			if (INFO[j][i] == 3)
 			{
 				SetChar(j, i, c_black, ' ');
@@ -104,13 +105,13 @@ VOID Ch()
 	//Это нежелательно, потому как отображаться будет неверное значение.
 	SetPos(38, _HEIGHT + 1);
 	//Потому мы указываем координаты, и затираем их, прежде чем писать наше значение.
-	printf("    ");
+	printf("       ");
+	SetPos(40, _HEIGHT + 1);
 	SetColor(f_red);
 	printf("%d", ch);
 }
-//Первое поколение, генерируемое случайно по всему полю.
-//Не гарантирую, что они смогут выжить ^_^
 
+//Первое поколение, генерируемое случайно по всему полю.
 VOID RandomFirstGen()
 {
 	INT i, j, k;
@@ -122,7 +123,7 @@ VOID RandomFirstGen()
 		if (INFO[j][i] != 1)
 		{
 			INFO[j][i] = 1;
-			SetChar(j, i, f_red, '1');
+			SetChar(j, i, b_red, ' ');
 			SetPos(0, 0);
 		}
 		else
@@ -156,7 +157,6 @@ VOID Rename()
 		}
 	}
 }
-
 
 VOID DeathGen()
 {
@@ -225,13 +225,13 @@ VOID DeathGen()
 		}
 	}
 
-	SetChar(38, _HEIGHT + 3, f_cyan, ' ');
-	printf("   ");
+	SetPos(38, _HEIGHT + 3);
+	printf("       ");
+	SetPos(40, _HEIGHT + 3);
+	SetColor(f_cyan);
+
 	printf("%d", death_ch);
-	death_ch = 0;
 }
-
-
 
 VOID SecondGen()
 {
@@ -295,16 +295,20 @@ VOID SecondGen()
 				}
 
 				ch = 0;
-				
-				
+
+
 			}
 		}
 	}
-	SetChar(42, _HEIGHT + 2, f_blue, ' ');
-	SetPos(42, _HEIGHT + 2);
-	printf("%d", k);
-}
 
+
+	SetColor(f_blue);
+	SetPos(38, _HEIGHT + 2);
+	printf("       ");
+	SetPos(40, _HEIGHT + 2);
+	printf("%d", k);
+
+}
 
 VOID Interface()
 {
@@ -344,32 +348,32 @@ VOID CustomRename()
 			if (INFO[j][i] == 0)
 			{
 				INFO[j][i] = 3;
-				SetChar(j, i, c_black, ' ');
+				SetChar(j, i, b_black, ' ');
 			}
 			else
 			if (INFO[j][i] == 2)
 			{
 				INFO[j][i] = 1;
-				SetChar(j, i, f_red, '1');
-				
+				SetChar(j, i, b_red, ' ');
+
 				custom = rand() % 100000 + 1;
-				
+
 				if (custom > 0 && custom <= 10) //бессмертная клетка, шанс 0,01%
 				{
 					INFO[j][i] = 4;
-					SetChar(j, i, f_green, '3');
+					SetChar(j, i, b_green, ' ');
 				}
-				
+
 				if (custom > 10 && custom <= 110) //клетка-сметрник, шанс 0,1%
 				{
 					INFO[j][i] = 5;
-					SetChar(j, i, f_yellow, '4');
+					SetChar(j, i, b_yellow, ' ');
 				}
-				
+
 				if (custom > 110 && custom <= 210) //клетка-любовник, шанс 0,1%
 				{
 					INFO[j][i] = 6;
-					SetChar(j, i, f_magenta, '5');
+					SetChar(j, i, b_magenta, ' ');
 				}
 				//
 			}
@@ -385,18 +389,18 @@ VOID CustomSecondGen()
 	{
 		for (j = 1; j < _WIDTH; j++)
 		{
-			
+
 			//если в радиусе есть клетка любовник, то клеткка сразу становится вторым поколением
-			if (INFO[j][i - 1] == 6 || INFO[j][i + 1] == 6 || INFO[j - 1][i] == 6 ||  INFO[j + 1][i] == 6 ||
+			if (INFO[j][i - 1] == 6 || INFO[j][i + 1] == 6 || INFO[j - 1][i] == 6 || INFO[j + 1][i] == 6 ||
 				INFO[j + 1][i + 1] == 6 || INFO[j + 1][i - 1] == 6 || INFO[j - 1][i + 1] == 6 || INFO[j - 1][i - 1] == 6)
 			{
 				INFO[j][i] = 2;
-				SetChar(j, i, f_blue, '2');
+				SetChar(j, i, b_blue, ' ');
 				k++;
 			}
 			//если нет то проверяем, может клетка итак должна была стать таковой
 			else
-			
+
 			if (INFO[j][i] == 3)
 			{
 
@@ -444,10 +448,10 @@ VOID CustomSecondGen()
 				}
 
 
-				if (ch == 3 || ch > 3)
+				if ( ch >= 3)
 				{
 					INFO[j][i] = 2;
-					SetChar(j, i, f_blue, '2');
+					SetChar(j, i, b_blue, ' ');
 					k++;
 				}
 
@@ -456,8 +460,10 @@ VOID CustomSecondGen()
 			}
 		}
 	}
-
-	SetPos(42, _HEIGHT + 2);
+	SetColor(f_blue);
+	SetPos(38, _HEIGHT + 2);
+	printf("       ");
+	SetPos(40, _HEIGHT + 2);
 	printf("%d", k);
 }
 
@@ -519,52 +525,54 @@ VOID CustomDeathGen()
 				if (ch < 2 || ch > 3)
 				{
 					INFO[j][i] = 0;
-					SetChar(j, i, f_cyan, '0');
+					SetChar(j, i, b_cyan, ' ');
 					death_ch++;
 				}
 
 				ch = 0;
 			}
 			else
-			if (GetChar(j, i) == '4')
+
+			if (INFO[j] [i] == 5)
 			{
+				
+				SetChar(j, i, b_cyan, ' ');
 				INFO[j][i] = 0;
-				SetChar(j, i, f_cyan, '0');
-				
 				//Даже если эти клетки попадут в границы мы просто отчистим после этого их обратно
-				
-					SetChar(j + 1, i, f_cyan, '0');
-					INFO[j + 1][i] = 0;
-					
-					SetChar(j, i + 1, f_cyan, '0');
-					INFO[j][i + 1] = 0;
-					
-					SetChar(j - 1, i, f_cyan, '0');
-					INFO[j - 1][i] = 0;
-					
-					SetChar(j, i - 1, f_cyan, '0');
-					INFO[j][i - 1] = 0;
-					
-					SetChar(j + 1, i + 1, f_cyan, '0');
-					INFO[j + 1][i + 1] = 0;
-					
-					SetChar(j + 1, i - 1, f_cyan, '0');
-					INFO[j + 1][i - 1] = 0;
-					
-					SetChar(j - 1, i + 1, f_cyan, '0');
-					INFO[j - 1][i + 1] = 0;
-					
-					SetChar(j - 1, i - 1, f_cyan, '0');
-					INFO[j - 1][i - 1] = 0;
-					
+
+				SetChar(j + 1, i, b_cyan, ' ');
+				INFO[j + 1][i] = 0;
+
+				SetChar(j, i + 1, b_cyan, ' ');
+				INFO[j][i + 1] = 0;
+
+				SetChar(j - 1, i, b_cyan, ' ');
+				INFO[j - 1][i] = 0;
+
+				SetChar(j, i - 1, b_cyan, ' ');
+				INFO[j][i - 1] = 0;
+
+				SetChar(j + 1, i + 1, b_cyan, ' ');
+				INFO[j + 1][i + 1] = 0;
+
+				SetChar(j + 1, i - 1, b_cyan, ' ');
+				INFO[j + 1][i - 1] = 0;
+
+				SetChar(j - 1, i + 1, b_cyan, ' ');
+				INFO[j - 1][i + 1] = 0;
+
+				SetChar(j - 1, i - 1, b_cyan, ' ');
+				INFO[j - 1][i - 1] = 0;
+
 				//собственно функция отчистки, которая включает и прорисовку границ
 				ClearScope();
 			}
 		}
 	}
-
+	SetColor(f_cyan);
 	SetPos(38, _HEIGHT + 3);
 	printf("    ");
+	SetPos(40, _HEIGHT + 3);
 	printf("%d", death_ch);
 	death_ch = 0;
 }
@@ -574,7 +582,7 @@ VOID CustomDeathGen()
 VOID Classic()
 {
 	Interface();
-	DWORD key = 0;	
+	DWORD key = 0;
 	RandomFirstGen();
 	Ch();
 
@@ -587,8 +595,8 @@ VOID Classic()
 		//key = _getch();
 		Rename();
 		Ch();
-	} while(key != '0');
-	
+	} while (key != '0');
+
 }
 
 VOID Сustom()
@@ -600,14 +608,15 @@ VOID Сustom()
 
 	do
 	{
-		_getch();
+		if ( _kbhit() ) key = _getch();
+		//_getch();
 		CustomSecondGen();
-		_getch();
+		//_getch();
 		CustomDeathGen();
-		key = _getch();
+		//key = _getch();
 		CustomRename();
 		Ch();
-	} while(key != '0');
+	} while (key != '0');
 }
 
 //===========================================================================
@@ -617,6 +626,7 @@ VOID Start()
 	INT i, j;
 	DWORD key = 0;
 	Clear();
+	system("CLS");
 	for (i = 0; i <= _HEIGHT + 7; i++)
 	{
 		for (j = 0; j <= _WIDTH; j++)
@@ -632,39 +642,39 @@ VOID Start()
 	WritePos(15, 15, f_red, "2.  Выход");
 
 	do{
-	if (_kbhit()) key = _getch();
-	switch (key)
-	{
+		if (_kbhit()) key = _getch();
+		switch (key)
+		{
 		case '1':
 		{
-			key = 0;
+					key = 0;
 
-			WritePos(15, 13, f_red, "                      ");
-			WritePos(15, 13, f_red, "1.  Классический режим");
-			WritePos(15, 15, f_red, "                            ");
-			WritePos(15, 15, f_red, "2.  Режим с доп. настройками");
+					WritePos(15, 13, f_red, "                      ");
+					WritePos(15, 13, f_red, "1.  Классический режим");
+					WritePos(15, 15, f_red, "                            ");
+					WritePos(15, 15, f_red, "2.  Режим с доп. настройками");
 
-			do{
-			if (_kbhit()) key = _getch();
-			switch (key)
-			{
-				case '1':
-				{
-					//Стандартный, классический
-					Classic();
-					Start();
-				}
-				case '2':
-				{
-					//Пользовательский
-					Сustom();
-					Start();
-				}
-			}
-			} while (TRUE);
+					do{
+						if (_kbhit()) key = _getch();
+						switch (key)
+						{
+						case '1':
+						{
+									//Стандартный, классический
+									Classic();
+									Start();
+						}
+						case '2':
+						{
+									//Пользовательский
+									Сustom();
+									Start();
+						}
+						}
+					} while (TRUE);
 		}
 		case '2': exit(0);
-	}
+		}
 	} while (TRUE);
 }
 
