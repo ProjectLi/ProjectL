@@ -15,9 +15,9 @@
 
 //Ch - обозначает счетчик
 
-#define _HEIGHT	25
-#define _WIDTH	50
-#define _SIZELIFE 100
+// _HEIGHT	25
+// _WIDTH	50
+// _SIZELIFE 100
 
 //Массив данных, в котором мы будем хранить известные положения ячеек с координатами X и Y.
 //Для которой 3 - пустое место, пробел
@@ -28,11 +28,11 @@
 //5 - клетка самоубийца
 //6 - клетка любовник
 
-int INFO[_WIDTH + 1][_HEIGHT + 1];
+
 
 //Очистка массива, все клетки равны 3, что соответсвует пустому месту
 
-VOID Clear()
+VOID Clear(int **&INFO, int _HEIGHT, int _WIDTH)
 {
 	for (int i = 0; i < _HEIGHT + 1; i++)
 	{
@@ -45,7 +45,7 @@ VOID Clear()
 
 //Та же отчистка, но только границ, которые не выводятся на экран, чтобы значения там не мешали процессу
 
-VOID ClearScope()
+VOID ClearScope(int **&INFO, int _HEIGHT, int _WIDTH)
 {
 	int j, i;
 	for (i = 0; i < _HEIGHT + 1; i++)
@@ -81,7 +81,7 @@ VOID ClearScope()
 
 //===========================================================================
 //Отдельно вынесенный счетчик первого поколения (красные).
-VOID Ch()
+VOID Ch(int **&INFO, int _HEIGHT, int _WIDTH)
 {
 	INT i, j, k = 0, ch = 0;
 
@@ -112,11 +112,11 @@ VOID Ch()
 }
 
 //Первое поколение, генерируемое случайно по всему полю.
-VOID RandomFirstGen()
+VOID RandomFirstGen(int **&INFO, int _HEIGHT, int _WIDTH)
 {
 	INT i, j, k;
 	//Раскидывает по координатам X и Y (j и i соотв.)
-	for (k = 1; k < _SIZELIFE + 1; k++)
+	for (k = 1; k < 101; k++)
 	{
 		i = rand() % 24 + 1;
 		j = rand() % 49 + 1;
@@ -135,7 +135,7 @@ VOID RandomFirstGen()
 }
 
 //Название говорит само за себя, тут переименование клеток из мертвых в пустые, и из новорожденных в взрослых
-VOID Rename()
+VOID Rename(int **&INFO, int _HEIGHT, int _WIDTH)
 {
 	INT i, j, k = 0;
 
@@ -158,7 +158,7 @@ VOID Rename()
 	}
 }
 
-VOID DeathGen()
+VOID DeathGen(int **&INFO, int _HEIGHT, int _WIDTH)
 {
 	INT i, j, k = 0, dth = 0, ch = 0, death_ch = 0;
 
@@ -233,7 +233,7 @@ VOID DeathGen()
 	printf("%d", death_ch);
 }
 
-VOID SecondGen()
+VOID SecondGen(int **&INFO, int _HEIGHT, int _WIDTH)
 {
 	INT i, j, k = 0, dth = 0, ch = 0;
 
@@ -337,7 +337,7 @@ VOID Interface()
 
 //===========================================================================
 
-VOID CustomRename()
+VOID CustomRename(int **&INFO, int _HEIGHT, int _WIDTH)
 {
 	INT i, j, custom;
 
@@ -381,7 +381,7 @@ VOID CustomRename()
 	}
 }
 
-VOID CustomSecondGen()
+VOID CustomSecondGen(int **&INFO, int _HEIGHT, int _WIDTH)
 {
 	INT i, j, k = 0, dth = 0, ch = 0;
 
@@ -467,7 +467,7 @@ VOID CustomSecondGen()
 	printf("%d", k);
 }
 
-VOID CustomDeathGen()
+VOID CustomDeathGen(int **&INFO, int _HEIGHT, int _WIDTH)
 {
 	INT i, j, k = 0, dth = 0, ch = 0, death_ch = 0;
 
@@ -579,7 +579,7 @@ VOID CustomDeathGen()
 
 //===========================================================================
 
-VOID Classic()
+VOID Classic(int **&INFO, int _HEIGHT, int _WIDTH)
 {
 	Interface();
 	DWORD key = 0;
@@ -589,32 +589,32 @@ VOID Classic()
 	do
 	{
 		key = _getch();
-		SecondGen();
+		SecondGen(INFO, _HEIGHT, _WIDTH);
 		//key = _getch();
-		DeathGen();
+		DeathGen(INFO, _HEIGHT, _WIDTH);
 		//key = _getch();
-		Rename();
-		Ch();
+		Rename(INFO, _HEIGHT, _WIDTH);
+		Ch(INFO, _HEIGHT, _WIDTH);
 	} while (key != '0');
 
 }
 
-VOID Сustom()
+VOID Сustom(int **&INFO, int _HEIGHT, int _WIDTH)
 {
 	Interface();
 	DWORD key = 0;
-	RandomFirstGen();
-	Ch();
+	RandomFirstGen(INFO, _HEIGHT, _WIDTH);
+	Ch(INFO, _HEIGHT, _WIDTH);
 
 	do
 	{
 		if ( _kbhit() ) key = _getch();
 		//_getch();
-		CustomSecondGen();
+		CustomSecondGen(INFO, _HEIGHT, _WIDTH);
 		//_getch();
-		CustomDeathGen();
+		CustomDeathGen(INFO, _HEIGHT, _WIDTH);
 		//key = _getch();
-		CustomRename();
+		CustomRename(INFO, _HEIGHT, _WIDTH);
 		Ch();
 	} while (key != '0');
 }
@@ -623,9 +623,19 @@ VOID Сustom()
 
 VOID Start()
 {
-	INT i, j;
+	INT i, j, _HEIGHT = 25, _WIDTH = 50, **INFO;
+	
+	INFO = new * int[_HEIGHT + 1];
+	
+	for (i = 0; i < _HEIGHT + 1; i++)
+	{
+		INFO[i] = new int[_WIDTH + 1];
+	}
+	
 	DWORD key = 0;
-	Clear();
+	
+	Clear(INFO, _HEIGHT, _WIDTH);
+	
 	system("CLS");
 	for (i = 0; i <= _HEIGHT + 7; i++)
 	{
@@ -661,13 +671,13 @@ VOID Start()
 						case '1':
 						{
 									//Стандартный, классический
-									Classic();
+									Classic(INFO, _HEIGHT, _WIDTH);
 									Start();
 						}
 						case '2':
 						{
 									//Пользовательский
-									Сustom();
+									Сustom(INFO, _HEIGHT, _WIDTH);
 									Start();
 						}
 						}
