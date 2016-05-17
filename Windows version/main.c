@@ -621,9 +621,9 @@ VOID Сustom(int **&INFO, int _HEIGHT, int _WIDTH)
 
 //===========================================================================
 
-VOID Start()
+VOID Start(int _HEIGHT, int _WIDTH)
 {
-	INT i, j, _HEIGHT = 25, _WIDTH = 50, **INFO;
+	INT i, j, **INFO;
 	
 	INFO = new * int[_HEIGHT + 1];
 	
@@ -672,13 +672,13 @@ VOID Start()
 						{
 									//Стандартный, классический
 									Classic(INFO, _HEIGHT, _WIDTH);
-									Start();
+									Start(25,50);
 						}
 						case '2':
 						{
 									//Пользовательский
 									Сustom(INFO, _HEIGHT, _WIDTH);
-									Start();
+									Start(25,50);
 						}
 						}
 					} while (TRUE);
@@ -695,7 +695,7 @@ INT main()
 
 	if (InitConsole("LifeTime", _WIDTH + 1, _HEIGHT + 7, b_black & f_white))
 	{
-		Start();
+		Start(25, 50);
 	}
 	else
 	{
