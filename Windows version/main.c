@@ -32,11 +32,11 @@
 
 //Очистка массива, все клетки равны 3, что соответсвует пустому месту
 
-VOID Clear(int **&INFO, int _HEIGHT, int _WIDTH)
+VOID Clear(int **&INFO, int HEIGHT, int WIDTH)
 {
-	for (int i = 0; i < _HEIGHT + 1; i++)
+	for (int i = 0; i < HEIGHT + 1; i++)
 	{
-		for (int j = 0; j < _WIDTH + 1; j++)
+		for (int j = 0; j < WIDTH + 1; j++)
 		{
 			INFO[j][i] = 3;
 		}
@@ -45,49 +45,49 @@ VOID Clear(int **&INFO, int _HEIGHT, int _WIDTH)
 
 //Та же отчистка, но только границ, которые не выводятся на экран, чтобы значения там не мешали процессу
 
-VOID ClearScope(int **&INFO, int _HEIGHT, int _WIDTH)
+VOID ClearScope(int **&INFO, int HEIGHT, int WIDTH)
 {
 	int j, i;
-	for (i = 0; i < _HEIGHT + 1; i++)
+	for (i = 0; i < HEIGHT + 1; i++)
 	{
 		INFO[0][i] = 3;    //Левая граница по вертикали
-		INFO[_WIDTH][i] = 3;    //Правая граница по вертикали
+		INFO[WIDTH][i] = 3;    //Правая граница по вертикали
 	}
 
 
-	for (j = 0; j < _WIDTH + 1; j++)
+	for (j = 0; j < WIDTH + 1; j++)
 	{
 
 		INFO[j][0] = 3;   //Верхняя сторона по горизонтали
-		INFO[j][_HEIGHT];     //Нижняя сторона по горизонтали
+		INFO[j][HEIGHT];     //Нижняя сторона по горизонтали
 	}
 
 	// Up row
-	FillPos(0, 0, f_darkyellow, '#', _WIDTH + 1);
+	FillPos(0, 0, f_darkyellow, '#', WIDTH + 1);
 
 	// Down row
 
-	FillPos(0, _HEIGHT, f_darkyellow, '#', _WIDTH + 1);
-	FillPos(0, _HEIGHT + 6, f_darkyellow, '#', _WIDTH + 1);
+	FillPos(0, HEIGHT, f_darkyellow, '#', WIDTH + 1);
+	FillPos(0, HEIGHT + 6, f_darkyellow, '#', WIDTH + 1);
 
 	// Side columns
 
-	for (i = 1; i < _HEIGHT + 6; i += 1)
+	for (i = 1; i < HEIGHT + 6; i += 1)
 	{
 		SetChar(0, i, f_darkyellow, '#');
-		SetChar(_WIDTH, i, f_darkyellow, '#');
+		SetChar(WIDTH, i, f_darkyellow, '#');
 	}
 }
 
 //===========================================================================
 //Отдельно вынесенный счетчик первого поколения (красные).
-VOID Ch(int **&INFO, int _HEIGHT, int _WIDTH)
+VOID Ch(int **&INFO, int HEIGHT, int WIDTH)
 {
 	INT i, j, k = 0, ch = 0;
 
-	for (i = 1; i < _HEIGHT; i++)
+	for (i = 1; i < HEIGHT; i++)
 	{
-		for (j = 1; j < _WIDTH; j++)
+		for (j = 1; j < WIDTH; j++)
 		{
 
 			if (INFO[j][i] == 1)
@@ -103,16 +103,16 @@ VOID Ch(int **&INFO, int _HEIGHT, int _WIDTH)
 	}
 	//Если при отрисовке предыдущее значение было больше нынешнего, то нарисуется "поверх".
 	//Это нежелательно, потому как отображаться будет неверное значение.
-	SetPos(38, _HEIGHT + 1);
+	SetPos(38, HEIGHT + 1);
 	//Потому мы указываем координаты, и затираем их, прежде чем писать наше значение.
 	printf("       ");
-	SetPos(40, _HEIGHT + 1);
+	SetPos(40, HEIGHT + 1);
 	SetColor(f_red);
 	printf("%d", ch);
 }
 
 //Первое поколение, генерируемое случайно по всему полю.
-VOID RandomFirstGen(int **&INFO, int _HEIGHT, int _WIDTH)
+VOID RandomFirstGen(int **&INFO, int HEIGHT, int WIDTH)
 {
 	INT i, j, k;
 	//Раскидывает по координатам X и Y (j и i соотв.)
@@ -135,13 +135,13 @@ VOID RandomFirstGen(int **&INFO, int _HEIGHT, int _WIDTH)
 }
 
 //Название говорит само за себя, тут переименование клеток из мертвых в пустые, и из новорожденных в взрослых
-VOID Rename(int **&INFO, int _HEIGHT, int _WIDTH)
+VOID Rename(int **&INFO, int HEIGHT, int WIDTH)
 {
 	INT i, j, k = 0;
 
-	for (i = 1; i < _HEIGHT; i++)
+	for (i = 1; i < HEIGHT; i++)
 	{
-		for (j = 1; j < _WIDTH; j++)
+		for (j = 1; j < WIDTH; j++)
 		{
 			if (INFO[j][i] == 0)
 			{
@@ -158,13 +158,13 @@ VOID Rename(int **&INFO, int _HEIGHT, int _WIDTH)
 	}
 }
 
-VOID DeathGen(int **&INFO, int _HEIGHT, int _WIDTH)
+VOID DeathGen(int **&INFO, int HEIGHT, int WIDTH)
 {
 	INT i, j, k = 0, dth = 0, ch = 0, death_ch = 0;
 
-	for (i = 1; i < _HEIGHT; i++)
+	for (i = 1; i < HEIGHT; i++)
 	{
-		for (j = 1; j < _WIDTH; j++)
+		for (j = 1; j < WIDTH; j++)
 		{
 			if (INFO[j][i] == 1)
 			{
@@ -225,21 +225,21 @@ VOID DeathGen(int **&INFO, int _HEIGHT, int _WIDTH)
 		}
 	}
 
-	SetPos(38, _HEIGHT + 3);
+	SetPos(38, HEIGHT + 3);
 	printf("       ");
-	SetPos(40, _HEIGHT + 3);
+	SetPos(40, HEIGHT + 3);
 	SetColor(f_cyan);
 
 	printf("%d", death_ch);
 }
 
-VOID SecondGen(int **&INFO, int _HEIGHT, int _WIDTH)
+VOID SecondGen(int **&INFO, int HEIGHT, int WIDTH)
 {
 	INT i, j, k = 0, dth = 0, ch = 0;
 
-	for (i = 1; i < _HEIGHT; i++)
+	for (i = 1; i < HEIGHT; i++)
 	{
-		for (j = 1; j < _WIDTH; j++)
+		for (j = 1; j < WIDTH; j++)
 		{
 			if (INFO[j][i] == 3)
 			{
@@ -303,14 +303,14 @@ VOID SecondGen(int **&INFO, int _HEIGHT, int _WIDTH)
 
 
 	SetColor(f_blue);
-	SetPos(38, _HEIGHT + 2);
+	SetPos(38, HEIGHT + 2);
 	printf("       ");
-	SetPos(40, _HEIGHT + 2);
+	SetPos(40, HEIGHT + 2);
 	printf("%d", k);
 
 }
 
-VOID Interface()
+VOID Interface(int **&INFO, int HEIGHT, int WIDTH)
 {
 	SHORT i;
 
@@ -319,31 +319,31 @@ VOID Interface()
 	system("cls");
 
 	// Up row
-	FillPos(0, 0, f_darkyellow, '#', _WIDTH + 1);
+	FillPos(0, 0, f_darkyellow, '#', WIDTH + 1);
 	// Down row
-	FillPos(0, _HEIGHT, f_darkyellow, '#', _WIDTH + 1);
-	FillPos(0, _HEIGHT + 6, f_darkyellow, '#', _WIDTH + 1);
+	FillPos(0, HEIGHT, f_darkyellow, '#', WIDTH + 1);
+	FillPos(0, HEIGHT + 6, f_darkyellow, '#', WIDTH + 1);
 	// Side columns
-	for (i = 1; i < _HEIGHT + 6; i += 1)
+	for (i = 1; i < HEIGHT + 6; i += 1)
 	{
 		SetChar(0, i, f_darkyellow, '#');
-		SetChar(_WIDTH, i, f_darkyellow, '#');
+		SetChar(WIDTH, i, f_darkyellow, '#');
 	}
 
-	WritePos(2, _HEIGHT + 1, f_red, "Первое поколение:                  [       ] ");
-	WritePos(2, _HEIGHT + 2, f_blue, "Второе поколение:                  [       ] ");
-	WritePos(2, _HEIGHT + 3, f_cyan, "Мертвые:                           [       ] ");
+	WritePos(2, HEIGHT + 1, f_red, "Первое поколение:                  [       ] ");
+	WritePos(2, HEIGHT + 2, f_blue, "Второе поколение:                  [       ] ");
+	WritePos(2, HEIGHT + 3, f_cyan, "Мертвые:                           [       ] ");
 }
 
 //===========================================================================
 
-VOID CustomRename(int **&INFO, int _HEIGHT, int _WIDTH)
+VOID CustomRename(int **&INFO, int HEIGHT, int WIDTH)
 {
 	INT i, j, custom;
 
-	for (i = 1; i < _HEIGHT; i++)
+	for (i = 1; i < HEIGHT; i++)
 	{
-		for (j = 1; j < _WIDTH; j++)
+		for (j = 1; j < WIDTH; j++)
 		{
 			if (INFO[j][i] == 0)
 			{
@@ -381,13 +381,13 @@ VOID CustomRename(int **&INFO, int _HEIGHT, int _WIDTH)
 	}
 }
 
-VOID CustomSecondGen(int **&INFO, int _HEIGHT, int _WIDTH)
+VOID CustomSecondGen(int **&INFO, int HEIGHT, int WIDTH)
 {
 	INT i, j, k = 0, dth = 0, ch = 0;
 
-	for (i = 1; i < _HEIGHT; i++)
+	for (i = 1; i < HEIGHT; i++)
 	{
-		for (j = 1; j < _WIDTH; j++)
+		for (j = 1; j < WIDTH; j++)
 		{
 
 			//если в радиусе есть клетка любовник, то клеткка сразу становится вторым поколением
@@ -461,19 +461,19 @@ VOID CustomSecondGen(int **&INFO, int _HEIGHT, int _WIDTH)
 		}
 	}
 	SetColor(f_blue);
-	SetPos(38, _HEIGHT + 2);
+	SetPos(38, HEIGHT + 2);
 	printf("       ");
-	SetPos(40, _HEIGHT + 2);
+	SetPos(40, HEIGHT + 2);
 	printf("%d", k);
 }
 
-VOID CustomDeathGen(int **&INFO, int _HEIGHT, int _WIDTH)
+VOID CustomDeathGen(int **&INFO, int HEIGHT, int WIDTH)
 {
 	INT i, j, k = 0, dth = 0, ch = 0, death_ch = 0;
 
-	for (i = 1; i < _HEIGHT; i++)
+	for (i = 1; i < HEIGHT; i++)
 	{
-		for (j = 1; j < _WIDTH; j++)
+		for (j = 1; j < WIDTH; j++)
 		{
 			if (INFO[j][i] == 1 || INFO[j][i] == 6)
 			{
@@ -565,86 +565,86 @@ VOID CustomDeathGen(int **&INFO, int _HEIGHT, int _WIDTH)
 				INFO[j - 1][i - 1] = 0;
 
 				//собственно функция отчистки, которая включает и прорисовку границ
-				ClearScope();
+				ClearScope(INFO, HEIGHT, WIDTH);
 			}
 		}
 	}
 	SetColor(f_cyan);
-	SetPos(38, _HEIGHT + 3);
+	SetPos(38, HEIGHT + 3);
 	printf("    ");
-	SetPos(40, _HEIGHT + 3);
+	SetPos(40, HEIGHT + 3);
 	printf("%d", death_ch);
 	death_ch = 0;
 }
 
 //===========================================================================
 
-VOID Classic(int **&INFO, int _HEIGHT, int _WIDTH)
+VOID Classic(int **&INFO, int HEIGHT, int WIDTH)
 {
-	Interface();
+	Interface(INFO, HEIGHT, WIDTH);
 	DWORD key = 0;
-	RandomFirstGen();
-	Ch();
+	RandomFirstGen(INFO, HEIGHT, WIDTH);
+	Ch(INFO, HEIGHT, WIDTH);
 
 	do
 	{
 		key = _getch();
-		SecondGen(INFO, _HEIGHT, _WIDTH);
+		SecondGen(INFO, HEIGHT, WIDTH);
 		//key = _getch();
-		DeathGen(INFO, _HEIGHT, _WIDTH);
+		DeathGen(INFO, HEIGHT, WIDTH);
 		//key = _getch();
-		Rename(INFO, _HEIGHT, _WIDTH);
-		Ch(INFO, _HEIGHT, _WIDTH);
+		Rename(INFO, HEIGHT, WIDTH);
+		Ch(INFO, HEIGHT, WIDTH);
 	} while (key != '0');
 
 }
 
-VOID Сustom(int **&INFO, int _HEIGHT, int _WIDTH)
+VOID Custom(int **&INFO, int HEIGHT, int WIDTH)
 {
-	Interface();
+	Interface(INFO, HEIGHT, WIDTH);
 	DWORD key = 0;
-	RandomFirstGen(INFO, _HEIGHT, _WIDTH);
-	Ch(INFO, _HEIGHT, _WIDTH);
+	RandomFirstGen(INFO, HEIGHT, WIDTH);
+	Ch(INFO, HEIGHT, WIDTH);
 
 	do
 	{
 		if ( _kbhit() ) key = _getch();
 		//_getch();
-		CustomSecondGen(INFO, _HEIGHT, _WIDTH);
+		CustomSecondGen(INFO, HEIGHT, WIDTH);
 		//_getch();
-		CustomDeathGen(INFO, _HEIGHT, _WIDTH);
+		CustomDeathGen(INFO, HEIGHT, WIDTH);
 		//key = _getch();
-		CustomRename(INFO, _HEIGHT, _WIDTH);
-		Ch();
+		CustomRename(INFO, HEIGHT, WIDTH);
+		Ch(INFO, HEIGHT, WIDTH);
 	} while (key != '0');
 }
 
 //===========================================================================
 
-VOID Start(int _HEIGHT, int _WIDTH)
+VOID Start(int HEIGHT, int WIDTH)
 {
 	INT i, j, **INFO;
 	
-	INFO = new * int[_HEIGHT + 1];
+	INFO = new int*[WIDTH + 1];
 	
-	for (i = 0; i < _HEIGHT + 1; i++)
+	for (i = 0; i < WIDTH + 1; i++)
 	{
-		INFO[i] = new int[_WIDTH + 1];
+		INFO[i] = new int[HEIGHT + 1];
 	}
 	
 	DWORD key = 0;
 	
-	Clear(INFO, _HEIGHT, _WIDTH);
+	Clear(INFO, HEIGHT, WIDTH);
 	
 	system("CLS");
-	for (i = 0; i <= _HEIGHT + 7; i++)
+	for (i = 0; i <= HEIGHT + 7; i++)
 	{
-		for (j = 0; j <= _WIDTH; j++)
+		for (j = 0; j <= WIDTH; j++)
 		{
 			SetChar(j, 0, f_yellow | b_yellow, ' ');
 		}
 		SetChar(0, i, f_yellow | b_yellow, ' ');
-		SetChar(_WIDTH, i, f_yellow | b_yellow, ' ');
+		SetChar(WIDTH, i, f_yellow | b_yellow, ' ');
 	}
 
 
@@ -671,13 +671,13 @@ VOID Start(int _HEIGHT, int _WIDTH)
 						case '1':
 						{
 									//Стандартный, классический
-									Classic(INFO, _HEIGHT, _WIDTH);
+									Classic(INFO, HEIGHT, WIDTH);
 									Start(25,50);
 						}
 						case '2':
 						{
 									//Пользовательский
-									Сustom(INFO, _HEIGHT, _WIDTH);
+									Custom(INFO, HEIGHT, WIDTH);
 									Start(25,50);
 						}
 						}
@@ -692,8 +692,8 @@ INT main()
 {
 	setlocale(LC_ALL, "Russian");
 	srand(time(NULL));
-
-	if (InitConsole("LifeTime", _WIDTH + 1, _HEIGHT + 7, b_black & f_white))
+	int HEIGHT = 25, WIDTH = 50;
+	if (InitConsole("LifeTime", WIDTH + 1, HEIGHT + 7, b_black & f_white))
 	{
 		Start(25, 50);
 	}
@@ -706,7 +706,7 @@ INT main()
 		system("@pause > nul");
 	}
 
-	_getch();
+	//_getch();
 
 	return 0;
 }
