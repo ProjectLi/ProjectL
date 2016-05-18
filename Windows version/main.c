@@ -588,13 +588,16 @@ VOID Classic(int **&INFO, int HEIGHT, int WIDTH)
 
 	do
 	{
-		key = _getch();
-		SecondGen(INFO, HEIGHT, WIDTH);
-		//key = _getch();
-		DeathGen(INFO, HEIGHT, WIDTH);
-		//key = _getch();
-		Rename(INFO, HEIGHT, WIDTH);
-		Ch(INFO, HEIGHT, WIDTH);
+		if ( _kbhit() ) key = _getch();
+		if (key == 32) key = _getch();
+		else
+		{
+			SecondGen(INFO, HEIGHT, WIDTH);
+			DeathGen(INFO, HEIGHT, WIDTH);
+			Rename(INFO, HEIGHT, WIDTH);
+			Ch(INFO, HEIGHT, WIDTH);
+		}
+
 	} while (key != '0');
 
 }
@@ -609,13 +612,14 @@ VOID Custom(int **&INFO, int HEIGHT, int WIDTH)
 	do
 	{
 		if ( _kbhit() ) key = _getch();
-		//_getch();
-		CustomSecondGen(INFO, HEIGHT, WIDTH);
-		//_getch();
-		CustomDeathGen(INFO, HEIGHT, WIDTH);
-		//key = _getch();
-		CustomRename(INFO, HEIGHT, WIDTH);
-		Ch(INFO, HEIGHT, WIDTH);
+		if (key == 32) key = _getch();
+		else
+		{
+			CustomSecondGen(INFO, HEIGHT, WIDTH);
+			CustomDeathGen(INFO, HEIGHT, WIDTH);
+			CustomRename(INFO, HEIGHT, WIDTH);
+			Ch(INFO, HEIGHT, WIDTH);
+		}
 	} while (key != '0');
 }
 
