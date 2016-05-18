@@ -60,7 +60,6 @@ BOOL InitConsole(LPSTR Title, SHORT x, SHORT y, WORD color);
 /*inline*/ SHORT GetPosX();
 /*inline*/ SHORT GetPosY();
 /*inline*/	BOOL SetPos(SHORT x, SHORT y);
-/*inline*/	BOOL SetPosEx(COORD _pos);
 
 /*inline*/	BOOL SetColor(WORD color);
 /*inline*/	BOOL FlushConsole(WORD color);
@@ -78,7 +77,6 @@ BOOL ResizeConsole(SHORT x, SHORT y);
 /*inline*/	BOOL WritePos(SHORT x, SHORT y, WORD color, LPSTR string);
 /*inline*/	BOOL WritePosEx(COORD _pos, WORD color, LPSTR string);
 /*inline*/	BOOL FillPos(SHORT x, SHORT y, WORD color, CHAR _ch, DWORD qty);
-/*inline*/	BOOL FillPosEx(COORD _pos, WORD color, CHAR _ch, DWORD qty);
 /*inline*/	BOOL MoveRect(SHORT top, SHORT bottom, SHORT left, SHORT right, SHORT x, SHORT y, WORD color, CHAR _ch);
 /*inline*/	BOOL MoveRectEx(SMALL_RECT _rct, COORD _pos, WORD color, CHAR _ch);
 
