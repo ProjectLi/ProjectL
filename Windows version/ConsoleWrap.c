@@ -1,3 +1,4 @@
+
 #ifdef _MSC_VER
 #define _CRT_SECURE_NO_WARNINGS
 #endif
@@ -199,13 +200,12 @@ BOOL ResizeConsole(SHORT x, SHORT y)
 	return FALSE;
 }
 
-// Writes singlebyte character to console output with selected attributes from cursor position
-/*inline*/ BOOL SetCharEx(COORD _pos, WORD color, CHAR ch)
+// Filles console output with selected character and attributes from cursor position qty times
+/*inline*/ BOOL FillPos(SHORT x, SHORT y, WORD color, CHAR _ch, DWORD qty)
 {
-	if (SetPosEx(_pos) && SetConsoleTextAttribute(console.hOut, color))
+	if (SetPos(x, y))
 	{
-		putchar(ch);
-		return TRUE;
+		return FillConsoleOutputAttribute(console.hOut, color, qty, console.pos, &tmpDword) && FillConsoleOutputCharacter(console.hOut, _ch, qty, console.pos, &tmpDword);
 	}
 	return FALSE;
 }
@@ -247,16 +247,16 @@ static char info[2048] = "(null)";
 LPSTR ConsoleDisplayInfo()
 {
 	sprintf(info, "\n>> CONSOLE_SCREEN_BUFFER_INFO <<\n\
-				  COORD		dwSize			=	{%u, %u};\n\
-				  COORD		dwCursorPosition	=	{%u, %u};\n\
-				  WORD		wAttributes		=	0x%06X;\n\
-				  SMALL_RECT	srWindow		=	{%u, %u, %u, %u};\n\
-				  COORD		dwMaximumWindowSize	=	{%u, %u};\n",
-				  console.prop.dwSize.X, console.prop.dwSize.Y,
-				  console.prop.dwCursorPosition.X, console.prop.dwCursorPosition.Y,
-				  console.prop.wAttributes,
-				  console.prop.srWindow.Top, console.prop.srWindow.Bottom, console.prop.srWindow.Left, console.prop.srWindow.Right,
-				  console.prop.dwMaximumWindowSize.X, console.prop.dwMaximumWindowSize.Y);
+				  				  COORD		dwSize			=	{%u, %u};\n\
+								  				  COORD		dwCursorPosition	=	{%u, %u};\n\
+												  				  WORD		wAttributes		=	0x%06X;\n\
+																  				  SMALL_RECT	srWindow		=	{%u, %u, %u, %u};\n\
+																				  				  COORD		dwMaximumWindowSize	=	{%u, %u};\n",
+																								  console.prop.dwSize.X, console.prop.dwSize.Y,
+																								  console.prop.dwCursorPosition.X, console.prop.dwCursorPosition.Y,
+																								  console.prop.wAttributes,
+																								  console.prop.srWindow.Top, console.prop.srWindow.Bottom, console.prop.srWindow.Left, console.prop.srWindow.Right,
+																								  console.prop.dwMaximumWindowSize.X, console.prop.dwMaximumWindowSize.Y);
 
 	return info;
 }
@@ -270,22 +270,22 @@ LPSTR ConsoleDisplayInfoEx()
 	int i;
 
 	sprintf(info, "\n>> CONSOLE_SCREEN_BUFFER_INFOEX <<\n\
-				  ULONG		cbSize			=	%lu;\n\
-				  COORD		dwSize			=	{%u, %u};\n\
-				  COORD		dwCursorPosition	=	{%u, %u};\n\
-				  WORD		wAttributes		=	0x%06X;\n\
-				  SMALL_RECT	srWindow		=	{%u, %u, %u, %u};\n\
-				  COORD		dwMaximumWindowSize	=	{%u, %u};\n\
-				  WORD		wPopupAttributes	=	0x%06X;\n\
-				  BOOL		bFullscreenSupported	=	%s;\n\nColor table:\n",
-				  console.propEx.cbSize,
-				  console.propEx.dwSize.X, console.propEx.dwSize.Y,
-				  console.propEx.dwCursorPosition.X, console.propEx.dwCursorPosition.Y,
-				  console.propEx.wAttributes,
-				  console.propEx.srWindow.Top, console.propEx.srWindow.Bottom, console.propEx.srWindow.Left, console.propEx.srWindow.Right,
-				  console.propEx.dwMaximumWindowSize.X, console.propEx.dwMaximumWindowSize.Y,
-				  console.propEx.wPopupAttributes,
-				  I2BStr(console.propEx.bFullscreenSupported));
+				  				  ULONG		cbSize			=	%lu;\n\
+								  				  COORD		dwSize			=	{%u, %u};\n\
+												  				  COORD		dwCursorPosition	=	{%u, %u};\n\
+																  				  WORD		wAttributes		=	0x%06X;\n\
+																				  				  SMALL_RECT	srWindow		=	{%u, %u, %u, %u};\n\
+																								  				  COORD		dwMaximumWindowSize	=	{%u, %u};\n\
+																												  				  WORD		wPopupAttributes	=	0x%06X;\n\
+																																  				  BOOL		bFullscreenSupported	=	%s;\n\nColor table:\n",
+																																				  console.propEx.cbSize,
+																																				  console.propEx.dwSize.X, console.propEx.dwSize.Y,
+																																				  console.propEx.dwCursorPosition.X, console.propEx.dwCursorPosition.Y,
+																																				  console.propEx.wAttributes,
+																																				  console.propEx.srWindow.Top, console.propEx.srWindow.Bottom, console.propEx.srWindow.Left, console.propEx.srWindow.Right,
+																																				  console.propEx.dwMaximumWindowSize.X, console.propEx.dwMaximumWindowSize.Y,
+																																				  console.propEx.wPopupAttributes,
+																																				  I2BStr(console.propEx.bFullscreenSupported));
 
 	for (i = 0; i < 16; i += 1)
 		sprintf(info + strlen(info), "	%-2i)\t0x%06X,\n", i, console.propEx.ColorTable[i]);
