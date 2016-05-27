@@ -581,6 +581,7 @@ VOID CustomDeathGen(int **&INFO, int HEIGHT, int WIDTH)
 
 VOID Classic(int **&INFO, int HEIGHT, int WIDTH)
 {
+	bool f = 0;
 	Interface(INFO, HEIGHT, WIDTH);
 	DWORD key = 0;
 	RandomFirstGen(INFO, HEIGHT, WIDTH);
@@ -588,8 +589,16 @@ VOID Classic(int **&INFO, int HEIGHT, int WIDTH)
 
 	do
 	{
-		if ( _kbhit() ) key = _getch();
-		if (key == 32) key = _getch();
+		if ( _kbhit() )
+		{
+			key = _getch();
+			f = 0;
+		}
+		if (key == 32 && f == 0)
+		{
+			key = _getch();
+			f = 1;
+		}
 		else
 		{
 			SecondGen(INFO, HEIGHT, WIDTH);
@@ -597,13 +606,13 @@ VOID Classic(int **&INFO, int HEIGHT, int WIDTH)
 			Rename(INFO, HEIGHT, WIDTH);
 			Ch(INFO, HEIGHT, WIDTH);
 		}
-
-	} while (key != '0');
+	} while (key != '0' && key != 27);
 
 }
 
 VOID Custom(int **&INFO, int HEIGHT, int WIDTH)
 {
+	bool f = 0;
 	Interface(INFO, HEIGHT, WIDTH);
 	DWORD key = 0;
 	RandomFirstGen(INFO, HEIGHT, WIDTH);
@@ -611,8 +620,16 @@ VOID Custom(int **&INFO, int HEIGHT, int WIDTH)
 
 	do
 	{
-		if ( _kbhit() ) key = _getch();
-		if (key == 32) key = _getch();
+		if ( _kbhit() )
+		{
+			key = _getch();
+			f = 0;
+		}
+		if (key == 32 && f == 0)
+		{
+			key = _getch();
+			f = 1;
+		}
 		else
 		{
 			CustomSecondGen(INFO, HEIGHT, WIDTH);
@@ -620,9 +637,8 @@ VOID Custom(int **&INFO, int HEIGHT, int WIDTH)
 			CustomRename(INFO, HEIGHT, WIDTH);
 			Ch(INFO, HEIGHT, WIDTH);
 		}
-	} while (key != '0');
+	} while (key != '0' && key != 27);
 }
-
 //===========================================================================
 
 VOID Start(int HEIGHT, int WIDTH)
