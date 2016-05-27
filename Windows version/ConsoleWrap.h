@@ -52,39 +52,15 @@ enum colors
 
 BOOL InitConsole(LPSTR Title, SHORT x, SHORT y, WORD color);
 
-/*inline*/ COORD GetSize();
-/*inline*/ SHORT GetSizeX();
-/*inline*/ SHORT GetSizeY();
-
-/*inline*/ COORD GetPos();
-/*inline*/ SHORT GetPosX();
-/*inline*/ SHORT GetPosY();
-/*inline*/	BOOL SetPos(SHORT x, SHORT y);
-
+//
 /*inline*/	BOOL SetColor(WORD color);
-/*inline*/	BOOL FlushConsole(WORD color);
-BOOL ResizeConsole(SHORT x, SHORT y);
-/*inline*/	BOOL ResizeConsoleEx(SHORT x, SHORT y, WORD color);
-
-/*inline*/  CHAR GetCurrentChar();
-/*inline*/  CHAR GetChar(SHORT x, SHORT y);
-/*inline*/  CHAR GetCharEx(COORD _pos);
-/*inline*/  BOOL SetCurrentChar(WORD color, CHAR ch);
-/*inline*/  BOOL SetChar(SHORT x, SHORT y, WORD color, CHAR ch);
-/*inline*/  BOOL SetCharEx(COORD _pos, WORD color, CHAR ch);
-
-/*inline*/	BOOL Write(WORD color, LPSTR string);
+/*inline*/  	BOOL SetChar(SHORT x, SHORT y, WORD color, CHAR ch);
+/*inline*/	BOOL SetPos(SHORT x, SHORT y);
 /*inline*/	BOOL WritePos(SHORT x, SHORT y, WORD color, LPSTR string);
-/*inline*/	BOOL WritePosEx(COORD _pos, WORD color, LPSTR string);
 /*inline*/	BOOL FillPos(SHORT x, SHORT y, WORD color, CHAR _ch, DWORD qty);
-/*inline*/	BOOL MoveRect(SHORT top, SHORT bottom, SHORT left, SHORT right, SHORT x, SHORT y, WORD color, CHAR _ch);
-/*inline*/	BOOL MoveRectEx(SMALL_RECT _rct, COORD _pos, WORD color, CHAR _ch);
+/*inline*/	BOOL Write(WORD color, LPSTR string);
+//
 
-// Inline bool to text substitution macro
-#define I2BStr(x) ((x)?"TRUE":"FALSE")
-
-LPSTR ConsoleDisplayInfo();
-LPSTR ConsoleDisplayInfoEx();
 /*inline*/	VOID ErrMessage(LPSTR msg);
 
 #endif
