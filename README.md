@@ -22,7 +22,7 @@ Conway chose his rules carefully, after considerable experimentation, to meet th
     The rules should be as simple as possible, whilst adhering to the above constraints.
   
 ## Contact development team:
-###Github: github.com/orgs/ProjectLi/teams/TeamNKWN
+###Github: https://github.com/orgs/ProjectLi/teams/teamnkwn
 ###E-mail: zvinnik@me.com
 
 _____________________________________________________________________________________________________________________
@@ -65,7 +65,7 @@ _____________________________________
 _____________________________________
 ## Контакты команды разработчиков TeamNKWN:
 
-###Github: github.com/orgs/ProjectLi/teams/TeamNKWN
+###Github: https://github.com/orgs/ProjectLi/teams/teamnkwn
 
 ###E-mail: zvinnik@me.com
 
