@@ -22,7 +22,7 @@ Conway chose his rules carefully, after considerable experimentation, to meet th
     The rules should be as simple as possible, whilst adhering to the above constraints.
   
 ## Contact development team:
-###Github: github.com/orgs/ProjectLi/teams/Team-Unknown
+###Github: github.com/orgs/ProjectLi/teams/TeamNKWN
 ###E-mail: zvinnik@me.com
 
 _____________________________________________________________________________________________________________________
@@ -63,9 +63,9 @@ _____________________________________
 	Для выхода из "Игры Жизнь" используется клавиша "0" для выхода в главное меню.
 
 _____________________________________
-## Контакты команды разработчиков Team One:
+## Контакты команды разработчиков TeamNKWN:
 
-###Github: github.com/orgs/ProjectLi/teams/Team-Unknown
+###Github: github.com/orgs/ProjectLi/teams/TeamNKWN
 
 ###E-mail: zvinnik@me.com
 
@@ -74,4 +74,4 @@ _____________________________________
 
 Created by Ili Daniil, Em Alexander on 1.03.16.
 
-Copyright © 2016 Team Unknown. All rights reserved.
+Copyright © 2016 TeamNKWN. All rights reserved.
