@@ -25,6 +25,19 @@ o	клетки 2-го поколения
 •	Клетки 1-го поколения – 
 •	Клетки 2-го поколения – 
 
+## Контакты команды разработчиков TeamNKWN:
+
+###Github: github.com/orgs/ProjectLi/teams/Teamnknwn
+
+###E-mail: zvinnik@me.com
+
+
+#The game of life
+
+Created by Ili Daniil, Em Alexander on 1.03.16.
+
+Copyright © 2016 TeamNKWN. All rights reserved.
+
 
 
 
